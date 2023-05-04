@@ -1,0 +1,3380 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta name="msvalidate.01" content="5257AAA4A093640CD7C02CACA6C953B2" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <script>
+        if (navigator.userAgent.match(/MSIE|Internet Explorer/i) || navigator.userAgent.match(/Trident\/7\..*?rv:11/i)) {
+            var href = document.location.href;
+            if (!href.match(/[?&]nowprocket/)) {
+                if (href.indexOf("?") == -1) {
+                    if (href.indexOf("#") == -1) {
+                        document.location.href = href + "?nowprocket=1"
+                    } else {
+                        document.location.href = href.replace("#", "?nowprocket=1#")
+                    }
+                } else {
+                    if (href.indexOf("#") == -1) {
+                        document.location.href = href + "&nowprocket=1"
+                    } else {
+                        document.location.href = href.replace("#", "&nowprocket=1#")
+                    }
+                }
+            }
+        }
+    </script>
+    <script>
+        class RocketLazyLoadScripts {
+            constructor() {
+                this.triggerEvents = ["keydown", "mousedown", "mousemove", "touchmove", "touchstart", "touchend", "wheel"], this.userEventHandler = this._triggerListener.bind(this), this.touchStartHandler = this._onTouchStart.bind(this), this.touchMoveHandler = this._onTouchMove.bind(this), this.touchEndHandler = this._onTouchEnd.bind(this), this.clickHandler = this._onClick.bind(this), this.interceptedClicks = [], window.addEventListener("pageshow", (e => {
+                    this.persisted = e.persisted
+                })), window.addEventListener("DOMContentLoaded", (() => {
+                    this._preconnect3rdParties()
+                })), this.delayedScripts = {
+                    normal: [],
+                    async: [],
+                    defer: []
+                }, this.allJQueries = []
+            }
+            _addUserInteractionListener(e) {
+                document.hidden ? e._triggerListener() : (this.triggerEvents.forEach((t => window.addEventListener(t, e.userEventHandler, {
+                    passive: !0
+                }))), window.addEventListener("touchstart", e.touchStartHandler, {
+                    passive: !0
+                }), window.addEventListener("mousedown", e.touchStartHandler), document.addEventListener("visibilitychange", e.userEventHandler))
+            }
+            _removeUserInteractionListener() {
+                this.triggerEvents.forEach((e => window.removeEventListener(e, this.userEventHandler, {
+                    passive: !0
+                }))), document.removeEventListener("visibilitychange", this.userEventHandler)
+            }
+            _onTouchStart(e) {
+                "HTML" !== e.target.tagName && (window.addEventListener("touchend", this.touchEndHandler), window.addEventListener("mouseup", this.touchEndHandler), window.addEventListener("touchmove", this.touchMoveHandler, {
+                    passive: !0
+                }), window.addEventListener("mousemove", this.touchMoveHandler), e.target.addEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "onclick", "rocket-onclick"))
+            }
+            _onTouchMove(e) {
+                window.removeEventListener("touchend", this.touchEndHandler), window.removeEventListener("mouseup", this.touchEndHandler), window.removeEventListener("touchmove", this.touchMoveHandler, {
+                    passive: !0
+                }), window.removeEventListener("mousemove", this.touchMoveHandler), e.target.removeEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "rocket-onclick", "onclick")
+            }
+            _onTouchEnd(e) {
+                window.removeEventListener("touchend", this.touchEndHandler), window.removeEventListener("mouseup", this.touchEndHandler), window.removeEventListener("touchmove", this.touchMoveHandler, {
+                    passive: !0
+                }), window.removeEventListener("mousemove", this.touchMoveHandler)
+            }
+            _onClick(e) {
+                e.target.removeEventListener("click", this.clickHandler), this._renameDOMAttribute(e.target, "rocket-onclick", "onclick"), this.interceptedClicks.push(e), e.preventDefault(), e.stopPropagation(), e.stopImmediatePropagation()
+            }
+            _replayClicks() {
+                window.removeEventListener("touchstart", this.touchStartHandler, {
+                    passive: !0
+                }), window.removeEventListener("mousedown", this.touchStartHandler), this.interceptedClicks.forEach((e => {
+                    e.target.dispatchEvent(new MouseEvent("click", {
+                        view: e.view,
+                        bubbles: !0,
+                        cancelable: !0
+                    }))
+                }))
+            }
+            _renameDOMAttribute(e, t, n) {
+                e.hasAttribute && e.hasAttribute(t) && (event.target.setAttribute(n, event.target.getAttribute(t)), event.target.removeAttribute(t))
+            }
+            _triggerListener() {
+                this._removeUserInteractionListener(this), "loading" === document.readyState ? document.addEventListener("DOMContentLoaded", this._loadEverythingNow.bind(this)) : this._loadEverythingNow()
+            }
+            _preconnect3rdParties() {
+                let e = [];
+                document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((t => {
+                    if (t.hasAttribute("src")) {
+                        const n = new URL(t.src).origin;
+                        n !== location.origin && e.push({
+                            src: n,
+                            crossOrigin: t.crossOrigin || "module" === t.getAttribute("data-rocket-type")
+                        })
+                    }
+                })), e = [...new Map(e.map((e => [JSON.stringify(e), e]))).values()], this._batchInjectResourceHints(e, "preconnect")
+            }
+            async _loadEverythingNow() {
+                this.lastBreath = Date.now(), this._delayEventListeners(), this._delayJQueryReady(this), this._handleDocumentWrite(), this._registerAllDelayedScripts(), this._preloadAllScripts(), await this._loadScriptsFromList(this.delayedScripts.normal), await this._loadScriptsFromList(this.delayedScripts.defer), await this._loadScriptsFromList(this.delayedScripts.async);
+                try {
+                    await this._triggerDOMContentLoaded(), await this._triggerWindowLoad()
+                } catch (e) {}
+                window.dispatchEvent(new Event("rocket-allScriptsLoaded")), this._replayClicks()
+            }
+            _registerAllDelayedScripts() {
+                document.querySelectorAll("script[type=rocketlazyloadscript]").forEach((e => {
+                    e.hasAttribute("src") ? e.hasAttribute("async") && !1 !== e.async ? this.delayedScripts.async.push(e) : e.hasAttribute("defer") && !1 !== e.defer || "module" === e.getAttribute("data-rocket-type") ? this.delayedScripts.defer.push(e) : this.delayedScripts.normal.push(e) : this.delayedScripts.normal.push(e)
+                }))
+            }
+            async _transformScript(e) {
+                return await this._littleBreath(), new Promise((t => {
+                    const n = document.createElement("script");
+                    [...e.attributes].forEach((e => {
+                        let t = e.nodeName;
+                        "type" !== t && ("data-rocket-type" === t && (t = "type"), n.setAttribute(t, e.nodeValue))
+                    })), e.hasAttribute("src") ? (n.addEventListener("load", t), n.addEventListener("error", t)) : (n.text = e.text, t());
+                    try {
+                        e.parentNode.replaceChild(n, e)
+                    } catch (e) {
+                        t()
+                    }
+                }))
+            }
+            async _loadScriptsFromList(e) {
+                const t = e.shift();
+                return t ? (await this._transformScript(t), this._loadScriptsFromList(e)) : Promise.resolve()
+            }
+            _preloadAllScripts() {
+                this._batchInjectResourceHints([...this.delayedScripts.normal, ...this.delayedScripts.defer, ...this.delayedScripts.async], "preload")
+            }
+            _batchInjectResourceHints(e, t) {
+                var n = document.createDocumentFragment();
+                e.forEach((e => {
+                    if (e.src) {
+                        const i = document.createElement("link");
+                        i.href = e.src, i.rel = t, "preconnect" !== t && (i.as = "script"), e.getAttribute && "module" === e.getAttribute("data-rocket-type") && (i.crossOrigin = !0), e.crossOrigin && (i.crossOrigin = e.crossOrigin), n.appendChild(i)
+                    }
+                })), document.head.appendChild(n)
+            }
+            _delayEventListeners() {
+                let e = {};
+
+                function t(t, n) {
+                    ! function(t) {
+                        function n(n) {
+                            return e[t].eventsToRewrite.indexOf(n) >= 0 ? "rocket-" + n : n
+                        }
+                        e[t] || (e[t] = {
+                            originalFunctions: {
+                                add: t.addEventListener,
+                                remove: t.removeEventListener
+                            },
+                            eventsToRewrite: []
+                        }, t.addEventListener = function() {
+                            arguments[0] = n(arguments[0]), e[t].originalFunctions.add.apply(t, arguments)
+                        }, t.removeEventListener = function() {
+                            arguments[0] = n(arguments[0]), e[t].originalFunctions.remove.apply(t, arguments)
+                        })
+                    }(t), e[t].eventsToRewrite.push(n)
+                }
+
+                function n(e, t) {
+                    let n = e[t];
+                    Object.defineProperty(e, t, {
+                        get: () => n || function() {},
+                        set(i) {
+                            e["rocket" + t] = n = i
+                        }
+                    })
+                }
+                t(document, "DOMContentLoaded"), t(window, "DOMContentLoaded"), t(window, "load"), t(window, "pageshow"), t(document, "readystatechange"), n(document, "onreadystatechange"), n(window, "onload"), n(window, "onpageshow")
+            }
+            _delayJQueryReady(e) {
+                let t = window.jQuery;
+                Object.defineProperty(window, "jQuery", {
+                    get: () => t,
+                    set(n) {
+                        if (n && n.fn && !e.allJQueries.includes(n)) {
+                            n.fn.ready = n.fn.init.prototype.ready = function(t) {
+                                e.domReadyFired ? t.bind(document)(n) : document.addEventListener("rocket-DOMContentLoaded", (() => t.bind(document)(n)))
+                            };
+                            const t = n.fn.on;
+                            n.fn.on = n.fn.init.prototype.on = function() {
+                                if (this[0] === window) {
+                                    function e(e) {
+                                        return e.split(" ").map((e => "load" === e || 0 === e.indexOf("load.") ? "rocket-jquery-load" : e)).join(" ")
+                                    }
+                                    "string" == typeof arguments[0] || arguments[0] instanceof String ? arguments[0] = e(arguments[0]) : "object" == typeof arguments[0] && Object.keys(arguments[0]).forEach((t => {
+                                        delete Object.assign(arguments[0], {
+                                            [e(t)]: arguments[0][t]
+                                        })[t]
+                                    }))
+                                }
+                                return t.apply(this, arguments), this
+                            }, e.allJQueries.push(n)
+                        }
+                        t = n
+                    }
+                })
+            }
+            async _triggerDOMContentLoaded() {
+                this.domReadyFired = !0, await this._littleBreath(), document.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._littleBreath(), window.dispatchEvent(new Event("rocket-DOMContentLoaded")), await this._littleBreath(), document.dispatchEvent(new Event("rocket-readystatechange")), await this._littleBreath(), document.rocketonreadystatechange && document.rocketonreadystatechange()
+            }
+            async _triggerWindowLoad() {
+                await this._littleBreath(), window.dispatchEvent(new Event("rocket-load")), await this._littleBreath(), window.rocketonload && window.rocketonload(), await this._littleBreath(), this.allJQueries.forEach((e => e(window).trigger("rocket-jquery-load"))), await this._littleBreath();
+                const e = new Event("rocket-pageshow");
+                e.persisted = this.persisted, window.dispatchEvent(e), await this._littleBreath(), window.rocketonpageshow && window.rocketonpageshow({
+                    persisted: this.persisted
+                })
+            }
+            _handleDocumentWrite() {
+                const e = new Map;
+                document.write = document.writeln = function(t) {
+                    const n = document.currentScript,
+                        i = document.createRange(),
+                        r = n.parentElement;
+                    let o = e.get(n);
+                    void 0 === o && (o = n.nextSibling, e.set(n, o));
+                    const s = document.createDocumentFragment();
+                    i.setStart(s, 0), s.appendChild(i.createContextualFragment(t)), r.insertBefore(s, o)
+                }
+            }
+            async _littleBreath() {
+                Date.now() - this.lastBreath > 45 && (await this._requestAnimFrame(), this.lastBreath = Date.now())
+            }
+            async _requestAnimFrame() {
+                return document.hidden ? new Promise((e => setTimeout(e))) : new Promise((e => requestAnimationFrame(e)))
+            }
+            static run() {
+                const e = new RocketLazyLoadScripts;
+                e._addUserInteractionListener(e)
+            }
+        }
+        RocketLazyLoadScripts.run();
+    </script>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="facebook-domain-verification" content="nfe3fsa6eq9ybfhh9l23pqc31hq1l8" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="https://d2kh7o38xye1vj.cloudfront.net/wp-content/uploads/2018/08/sr-favicon1-32x32.png" />
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+    <meta name="uri-translation" content="on" />
+    <link rel="alternate" hreflang="en" href="https://www.shiprocket.in/" />
+    <link rel="alternate" hreflang="bn" href="https://www.shiprocket.in/bn/" />
+    <link rel="alternate" hreflang="gu" href="https://www.shiprocket.in/gu/" />
+    <link rel="alternate" hreflang="hi" href="https://www.shiprocket.in/hi/" />
+    <link rel="alternate" hreflang="mr" href="https://www.shiprocket.in/mr/" />
+    <link rel="alternate" hreflang="pa" href="https://www.shiprocket.in/pa/" />
+    <link rel="alternate" hreflang="ta" href="https://www.shiprocket.in/ta/" />
+    <link rel="alternate" hreflang="te" href="https://www.shiprocket.in/te/" />
+
+    <!-- This site is optimized with the Yoast SEO plugin v19.14 - https://yoast.com/wordpress/plugins/seo/ -->
+    <title>eCommerce Logistics Solutions: Courier Aggregator India - Shiprocket</title>
+    <meta name="description" content="India&#039;s most-used eCommerce logistics and shipping software solution for the best courier services. Try Shiprocket for free." />
+    <link rel="canonical" href="https://www.shiprocket.in/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="eCommerce Logistics Solutions: Courier Aggregator India - Shiprocket" />
+    <meta property="og:description" content="India&#039;s most-used eCommerce logistics and shipping software solution for the best courier services. Try Shiprocket for free." />
+    <meta property="og:url" content="https://www.shiprocket.in/" />
+    <meta property="og:site_name" content="Shiprocket" />
+    <meta property="article:publisher" content="https://www.facebook.com/Shiprocket" />
+    <meta property="article:modified_time" content="2022-11-02T05:59:49+00:00" />
+    <meta property="og:image" content="https://d2kh7o38xye1vj.cloudfront.net/wp-content/uploads/2022/08/SR-Foot-Banner-1.png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="460" />
+    <meta property="og:image:type" content="image/png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@shiprocketindia" />
+    <meta name="twitter:label1" content="Est. reading time" />
+    <meta name="twitter:data1" content="17 minutes" />
+    <script type="application/ld+json" class="yoast-schema-graph">
+        {
+            "@context": "https://schema.org",
+            "@graph": [{
+                "@type": "WebPage",
+                "@id": "https://www.shiprocket.in/",
+                "url": "https://www.shiprocket.in/",
+                "name": "eCommerce Logistics Solutions: Courier Aggregator India - Shiprocket",
+                "isPartOf": {
+                    "@id": "https://www.shiprocket.in/#website"
+                },
+                "about": {
+                    "@id": "https://www.shiprocket.in/#organization"
+                },
+                "primaryImageOfPage": {
+                    "@id": "https://www.shiprocket.in/#primaryimage"
+                },
+                "image": {
+                    "@id": "https://www.shiprocket.in/#primaryimage"
+                },
+                "thumbnailUrl": "https://d2kh7o38xye1vj.cloudfront.net/wp-content/uploads/2021/03/delhivery-1.png",
+                "datePublished": "2018-05-17T06:15:17+00:00",
+                "dateModified": "2022-11-02T05:59:49+00:00",
+                "description": "India's most-used eCommerce logistics and shipping software solution for the best courier services. Try Shiprocket for free.",
+                "breadcrumb": {
+                    "@id": "https://www.shiprocket.in/#breadcrumb"
+                },
+                "inLanguage": "en-US",
+                "potentialAction": [{
+                    "@type": "ReadAction",
+                    "target": ["https://www.shiprocket.in/"]
+                }]
+            }, {
+                "@type": "ImageObject",
+                "inLanguage": "en-US",
+                "@id": "https://www.shiprocket.in/#primaryimage",
+                "url": "https://d2kh7o38xye1vj.cloudfront.net/wp-content/uploads/2021/03/delhivery-1.png",
+                "contentUrl": "https://d2kh7o38xye1vj.cloudfront.net/wp-content/uploads/2021/03/delhivery-1.png",
+                "width": 147,
+                "height": 147
+            }, {
+                "@type": "BreadcrumbList",
+                "@id": "https://www.shiprocket.in/#breadcrumb",
+                "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Home"
+                }]
+            }, {
+                "@type": "WebSite",
+                "@id": "https://www.shiprocket.in/#website",
+                "url": "https://www.shiprocket.in/",
+                "name": "Shiprocket",
+                "description": "",
+                "publisher": {
+                    "@id": "https://www.shiprocket.in/#organization"
+                },
+                "potentialAction": [{
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://www.shiprocket.in/?s={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }],
+                "inLanguage": "en-US"
+            }, {
+                "@type": "Organization",
+                "@id": "https://www.shiprocket.in/#organization",
+                "name": "Shiprocket",
+                "alternateName": "Bigfoot Retail Solutions Pvt. Ltd",
+                "url": "https://www.shiprocket.in/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "inLanguage": "en-US",
+                    "@id": "https://www.shiprocket.in/#/schema/logo/image/",
+                    "url": "https://www.shiprocket.in/wp-content/uploads/2018/08/SR-logo.png",
+                    "contentUrl": "https://www.shiprocket.in/wp-content/uploads/2018/08/SR-logo.png",
+                    "width": 148,
+                    "height": 36,
+                    "caption": "Shiprocket"
+                },
+                "image": {
+                    "@id": "https://www.shiprocket.in/#/schema/logo/image/"
+                },
+                "sameAs": ["https://www.instagram.com/shiprocket.in", "https://www.linkedin.com/in/shiprocket", "https://www.youtube.com/channel/UCvdTTQAnDvvwyhwVzri-Xow", "https://www.facebook.com/Shiprocket", "https://twitter.com/shiprocketindia"]
+            }]
+        }
+    </script>
+    <meta name="msvalidate.01" content="8207C071AEE02E258495C2D365DDE84B" />
+    <meta name="google-site-verification" content="mE01gQ3XMVTK1diAgaAQ5oFcfu82updCUHmA1NFZB3E" />
+    <meta name="yandex-verification" content="7022c371667688b5" />
+    <!-- / Yoast SEO plugin. -->
+
+
+    <link rel='dns-prefetch' href='//code.jquery.com' />
+    <link rel='dns-prefetch' href='//maps.google.com' />
+    <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+    <link rel='dns-prefetch' href='//46nwg817z0gu2lj6oi5t3w61-wpengine.netdna-ssl.com' />
+    <link rel='dns-prefetch' href='//d2kh7o38xye1vj.cloudfront.net' />
+    <link rel='dns-prefetch' href='//maxcdn.bootstrapcdn.com' />
+    <link rel='dns-prefetch' href='//secure.gravatar.com' />
+    <link rel='dns-prefetch' href='//www.google.co.in' />
+    <link rel='dns-prefetch' href='//onesignal.com' />
+    <link rel='dns-prefetch' href='//www.geoplugin.net' />
+    <link rel='dns-prefetch' href='//cdnjs.cloudflare.com' />
+
+    <link href='https://d2kh7o38xye1vj.cloudfront.net' rel='preconnect' />
+    <link rel="alternate" type="application/rss+xml" title="Shiprocket &raquo; Feed" href="https://www.shiprocket.in/feed/" />
+    <link rel="alternate" type="application/rss+xml" title="Shiprocket &raquo; Comments Feed" href="https://www.shiprocket.in/comments/feed/" />
+    <link rel="alternate" type="application/rss+xml" title="Shiprocket &raquo; Stories Feed" href="https://www.shiprocket.in/web-stories/feed/">
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 0.07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel='stylesheet' id='classic-theme-styles-css' href='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/css/classic-themes.min.css?ver=1' type='text/css' media='all' />
+    <style id='global-styles-inline-css' type='text/css'>
+        body {
+            --wp--preset--color--black: #000000;
+            --wp--preset--color--cyan-bluish-gray: #abb8c3;
+            --wp--preset--color--white: #ffffff;
+            --wp--preset--color--pale-pink: #f78da7;
+            --wp--preset--color--vivid-red: #cf2e2e;
+            --wp--preset--color--luminous-vivid-orange: #ff6900;
+            --wp--preset--color--luminous-vivid-amber: #fcb900;
+            --wp--preset--color--light-green-cyan: #7bdcb5;
+            --wp--preset--color--vivid-green-cyan: #00d084;
+            --wp--preset--color--pale-cyan-blue: #8ed1fc;
+            --wp--preset--color--vivid-cyan-blue: #0693e3;
+            --wp--preset--color--vivid-purple: #9b51e0;
+            --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg, rgba(6, 147, 227, 1) 0%, rgb(155, 81, 224) 100%);
+            --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg, rgb(122, 220, 180) 0%, rgb(0, 208, 130) 100%);
+            --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg, rgba(252, 185, 0, 1) 0%, rgba(255, 105, 0, 1) 100%);
+            --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg, rgba(255, 105, 0, 1) 0%, rgb(207, 46, 46) 100%);
+            --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg, rgb(238, 238, 238) 0%, rgb(169, 184, 195) 100%);
+            --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg, rgb(74, 234, 220) 0%, rgb(151, 120, 209) 20%, rgb(207, 42, 186) 40%, rgb(238, 44, 130) 60%, rgb(251, 105, 98) 80%, rgb(254, 248, 76) 100%);
+            --wp--preset--gradient--blush-light-purple: linear-gradient(135deg, rgb(255, 206, 236) 0%, rgb(152, 150, 240) 100%);
+            --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg, rgb(254, 205, 165) 0%, rgb(254, 45, 45) 50%, rgb(107, 0, 62) 100%);
+            --wp--preset--gradient--luminous-dusk: linear-gradient(135deg, rgb(255, 203, 112) 0%, rgb(199, 81, 192) 50%, rgb(65, 88, 208) 100%);
+            --wp--preset--gradient--pale-ocean: linear-gradient(135deg, rgb(255, 245, 203) 0%, rgb(182, 227, 212) 50%, rgb(51, 167, 181) 100%);
+            --wp--preset--gradient--electric-grass: linear-gradient(135deg, rgb(202, 248, 128) 0%, rgb(113, 206, 126) 100%);
+            --wp--preset--gradient--midnight: linear-gradient(135deg, rgb(2, 3, 129) 0%, rgb(40, 116, 252) 100%);
+            --wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');
+            --wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');
+            --wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');
+            --wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');
+            --wp--preset--duotone--midnight: url('#wp-duotone-midnight');
+            --wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');
+            --wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');
+            --wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');
+            --wp--preset--font-size--small: 13px;
+            --wp--preset--font-size--medium: 20px;
+            --wp--preset--font-size--large: 36px;
+            --wp--preset--font-size--x-large: 42px;
+            --wp--preset--spacing--20: 0.44rem;
+            --wp--preset--spacing--30: 0.67rem;
+            --wp--preset--spacing--40: 1rem;
+            --wp--preset--spacing--50: 1.5rem;
+            --wp--preset--spacing--60: 2.25rem;
+            --wp--preset--spacing--70: 3.38rem;
+            --wp--preset--spacing--80: 5.06rem;
+        }
+
+        :where(.is-layout-flex) {
+            gap: 0.5em;
+        }
+
+        body .is-layout-flow>.alignleft {
+            float: left;
+            margin-inline-start: 0;
+            margin-inline-end: 2em;
+        }
+
+        body .is-layout-flow>.alignright {
+            float: right;
+            margin-inline-start: 2em;
+            margin-inline-end: 0;
+        }
+
+        body .is-layout-flow>.aligncenter {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        body .is-layout-constrained>.alignleft {
+            float: left;
+            margin-inline-start: 0;
+            margin-inline-end: 2em;
+        }
+
+        body .is-layout-constrained>.alignright {
+            float: right;
+            margin-inline-start: 2em;
+            margin-inline-end: 0;
+        }
+
+        body .is-layout-constrained>.aligncenter {
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        body .is-layout-constrained> :where(:not(.alignleft):not(.alignright):not(.alignfull)) {
+            max-width: var(--wp--style--global--content-size);
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        body .is-layout-constrained>.alignwide {
+            max-width: var(--wp--style--global--wide-size);
+        }
+
+        body .is-layout-flex {
+            display: flex;
+        }
+
+        body .is-layout-flex {
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        body .is-layout-flex>* {
+            margin: 0;
+        }
+
+        :where(.wp-block-columns.is-layout-flex) {
+            gap: 2em;
+        }
+
+        .has-black-color {
+            color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-color {
+            color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-color {
+            color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-color {
+            color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-color {
+            color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-color {
+            color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-color {
+            color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-color {
+            color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-color {
+            color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-color {
+            color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-color {
+            color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-color {
+            color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-black-background-color {
+            background-color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-background-color {
+            background-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-background-color {
+            background-color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-background-color {
+            background-color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-background-color {
+            background-color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-background-color {
+            background-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-background-color {
+            background-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-background-color {
+            background-color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-background-color {
+            background-color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-background-color {
+            background-color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-background-color {
+            background-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-background-color {
+            background-color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-black-border-color {
+            border-color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-border-color {
+            border-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-border-color {
+            border-color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-border-color {
+            border-color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-border-color {
+            border-color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-border-color {
+            border-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-border-color {
+            border-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-border-color {
+            border-color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-border-color {
+            border-color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-border-color {
+            border-color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-border-color {
+            border-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-border-color {
+            border-color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-vivid-cyan-blue-to-vivid-purple-gradient-background {
+            background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;
+        }
+
+        .has-light-green-cyan-to-vivid-green-cyan-gradient-background {
+            background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;
+        }
+
+        .has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background {
+            background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-orange-to-vivid-red-gradient-background {
+            background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;
+        }
+
+        .has-very-light-gray-to-cyan-bluish-gray-gradient-background {
+            background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;
+        }
+
+        .has-cool-to-warm-spectrum-gradient-background {
+            background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;
+        }
+
+        .has-blush-light-purple-gradient-background {
+            background: var(--wp--preset--gradient--blush-light-purple) !important;
+        }
+
+        .has-blush-bordeaux-gradient-background {
+            background: var(--wp--preset--gradient--blush-bordeaux) !important;
+        }
+
+        .has-luminous-dusk-gradient-background {
+            background: var(--wp--preset--gradient--luminous-dusk) !important;
+        }
+
+        .has-pale-ocean-gradient-background {
+            background: var(--wp--preset--gradient--pale-ocean) !important;
+        }
+
+        .has-electric-grass-gradient-background {
+            background: var(--wp--preset--gradient--electric-grass) !important;
+        }
+
+        .has-midnight-gradient-background {
+            background: var(--wp--preset--gradient--midnight) !important;
+        }
+
+        .has-small-font-size {
+            font-size: var(--wp--preset--font-size--small) !important;
+        }
+
+        .has-medium-font-size {
+            font-size: var(--wp--preset--font-size--medium) !important;
+        }
+
+        .has-large-font-size {
+            font-size: var(--wp--preset--font-size--large) !important;
+        }
+
+        .has-x-large-font-size {
+            font-size: var(--wp--preset--font-size--x-large) !important;
+        }
+
+        .wp-block-navigation a:where(:not(.wp-element-button)) {
+            color: inherit;
+        }
+
+        :where(.wp-block-columns.is-layout-flex) {
+            gap: 2em;
+        }
+
+        .wp-block-pullquote {
+            font-size: 1.5em;
+            line-height: 1.6;
+        }
+    </style>
+
+
+    <link data-minify="1" rel='stylesheet' id='ABdev_shortcodes-css' href='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/themes/salamat/css/dnd-shortcodes.css?ver=1673870513' type='text/css' media='all' />
+    <link data-minify="1" rel='stylesheet' id='ABdev_shortcodes_responsive-css' href='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/plugins/dnd-shortcodes/css/responsive.css?ver=1673870513' type='text/css' media='all' />
+    <link data-minify="1" rel='stylesheet' id='SR_testimonials-css' href='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/plugins/sr-testimonials/style.css?ver=1673870513' type='text/css' media='all' />
+    <link data-minify="1" rel='stylesheet' id='ABdev_core_icons-css' href='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/themes/salamat/css/core-icons/core_style.css?ver=1673870513' type='text/css' media='all' />
+
+    <link data-minify="1" rel='stylesheet' id='fancybox-css' href='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/themes/salamat/css/jquery.fancybox-1.3.4.css?ver=1673870513' type='text/css' media='all' />
+    <link data-minify="1" rel='stylesheet' id='main_css-css' href='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/themes/salamat/style.css?ver=1673870513' type='text/css' media='all' />
+    <style id='main_css-inline-css' type='text/css'>
+        .logos li,
+        .logos-sm li {
+            display: inline-block;
+            margin: 13px 7px;
+            list-style: none;
+            text-align: center
+        }
+
+        .logos-sm li {
+            margin: 5px;
+        }
+
+        .logos p,
+        .logos-sm p {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .logos-sm p,
+        .logos p {
+            font-size: 10px;
+            color: #fff;
+        }
+
+        .ABt_testimonials_slide li {
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .social {
+            background-color: transparent !important;
+        }
+
+        .social a {
+            border: 0 none !important;
+            line-height: 0 !important;
+            width: 16.6667% !important;
+        }
+
+        #ABdev_menu_toggle {
+            height: 47px !important;
+            ;
+            width: 47px !important;
+            line-height: 38px !important;
+        }
+
+        .without_picture .signup-home {
+            font-size: 18px;
+        }
+
+        .ABt_author {
+            color: #929292;
+        }
+
+        .without_picture .ABt_testimonials_slide .testimonial_big .source {
+            position: relative;
+        }
+
+        @media only screen and (min-width: 980px) and (max-width: 1350px) {
+            .home-tabs .ui-tabs-nav li {
+                width: 15.8% !important;
+                border-radius: 3px;
+                border-bottom: 1px solid #e6ebed;
+                font-size: 15px !important;
+                white-space: normal !important;
+            }
+            .home-tabs .ui-tabs-nav li a {
+                padding: 15px 10px !important;
+            }
+            .home-tabs .dnd-tabs-wrapper {
+                border: 0;
+                background: transparent !important;
+            }
+            .home-tabs .ui-tabs-panel {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .home-tabs .ui-tabs-nav li.ui-tabs-active::after {
+                background: transparent !important;
+            }
+            .home-tabs .ui-tabs-nav li.ui-tabs-active {
+                border-color: #4892D3;
+            }
+            .new-partner-v .img_boxes {
+                border: 0 !important;
+            }
+        }
+
+        .homesection {
+            background-size: cover;
+        }
+
+        @media only screen and (max-width: 479px) {
+            .logos p {
+                margin: 0;
+                line-height: 27px;
+            }
+            #testimonial_sec h3,
+            #testimonial_sec header {
+                margin: 0;
+            }
+            #testimonial_sec .ABt_testimonials_wrapper_static .testimonial_small .source {
+                left: 100%;
+                text-align: left;
+                top: 27px;
+                width: 57%;
+            }
+            .homesection p {
+                text-align: center;
+            }
+            .homesection .dnd_column_dd_span6 .padding_right {
+                padding-right: 0;
+            }
+        }
+
+        .nk-aramex-couriers-table {
+            text-align: left;
+        }
+
+        h3.nk-aramex-couriers-table-heading {
+            border: 1px solid transparent;
+        }
+
+        @media only screen and (max-width: 991px) {
+            h2.text-white span {
+                font-size: 28px;
+            }
+        }
+
+        @media only screen and (max-width: 768px) {
+            .nk-aramex-couriers-table-heading span {
+                display: inline-block;
+                padding: 20px 0 10px 0;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .page-id-8748 #default_page_row {
+                padding: 0;
+            }
+            .nk-carrier-integrations .portfolio_item_meta .post-readmore {
+                margin-bottom: 0;
+            }
+        }
+    </style>
+    <link data-minify="1" rel='stylesheet' id='responsive_css-css' href='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/themes/salamat/css/responsive.css?ver=1673870513' type='text/css' media='all' />
+    <script data-minify="1" type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/jquery-3.5.1.min.js?ver=1673870514' id='jquery-js'></script>
+
+    <link rel="https://api.w.org/" href="https://www.shiprocket.in/wp-json/" />
+    <link rel="alternate" type="application/json" href="https://www.shiprocket.in/wp-json/wp/v2/pages/10113" />
+    <link rel="alternate" type="application/json+oembed" href="https://www.shiprocket.in/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.shiprocket.in%2F" />
+    <link rel="alternate" type="text/xml+oembed" href="https://www.shiprocket.in/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.shiprocket.in%2F&#038;format=xml" />
+    <script type="rocketlazyloadscript">var gt_request_uri = '/';</script>
+    <!-- Start of the LeadBooster Chatbot by Pipedrive code -->
+
+    <!-- End of the LeadBooster Chatbot by Pipedrive Code. -->
+    <style type="text/css">
+        div[id^="wpcf7-f29907"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f29907"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f29051"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f29051"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f28764"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f28764"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f26797"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f26797"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f26426"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f26426"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f25911"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f25911"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f25896"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f25896"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f25572"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f25572"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f25281"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f25281"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f24906"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f24906"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f24564"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f24564"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f23946"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f23946"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f23350"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f23350"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f23346"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f23346"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f23172"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f23172"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f22984"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f22984"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f22324"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f22324"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f22232"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f22232"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f21026"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f21026"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f19588"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f19588"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f18866"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f18866"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f18385"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f18385"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f17998"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f17998"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f17443"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f17443"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f16997"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f16997"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f16706"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f16706"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f16185"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f16185"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f16126"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f16126"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f15575"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f15575"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f14558"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f14558"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f13946"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f13946"] button.cf7mls_back {}
+
+        div[id^="wpcf7-f13693"] button.cf7mls_next {}
+
+        div[id^="wpcf7-f13693"] button.cf7mls_back {}
+    </style>
+    <style type="text/css" class="options-output">
+        #title_breadcrumbs_bar {
+            background-color: #285fdb;
+            background-size: cover;
+            background-image: url('https://preview.ab-themes.com/salamat/wp-content/uploads/2014/06/header.png');
+        }
+
+        #coming_soon_header {
+            background-image: url('https://preview.ab-themes.com/salamat/wp-content/uploads/2014/09/header_coming_soon.jpg');
+        }
+    </style><noscript><style id="rocket-lazyload-nojs-css">.rll-youtube-player, [data-lazy-src]{display:none !important;}</style></noscript>
+    <link data-minify="1" rel="stylesheet" type="text/css" href="https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/themes/salamat/salamat-custom-css.css?ver=1673870514"
+        media='all' />
+    <link data-minify="1" rel="stylesheet" type="text/css" href="https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css?ver=1673870514" media='all' />
+
+    <!-- Google Tag Manager -->
+    <!-- <script type="rocketlazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P7FQTZ6');</script> -->
+    <!-- End Google Tag Manager -->
+    <script type="rocketlazyloadscript">
+        // jQuery(document).ready(function(){ // jQuery("a.menu-link").addClass("link-click"); // jQuery(".menu-item a").addClass("link-click"); // jQuery("section.blog h2 a").addClass("link-click"); // jQuery("section h5 a").addClass("link-click"); // jQuery(".inner-details
+        a").addClass("link-click"); // jQuery(".story-cards a").addClass("link-click"); // var referrer = document.referrer; // var pathname = document.location.pathname; // let searchParams = new URLSearchParams(document.location.search); // let UTM
+        = {}; // function setCookie(cname, cvalue, exdays) { // var d = new Date(); // d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000)); // var expires = "expires="+d.toUTCString(); // cvalue = cvalue == 'null' ? '' : cvalue; // document.cookie
+        = cname + "=" + cvalue + ";" + expires + ";path=/"+";domain=.shiprocket.in"; // //console.log('Setcookie'+cname+cvalue); // } // function getParsedCookie(val){ // //console.log('inside parsed cookie',val); // return val ? JSON.parse(decodeURIComponent(val))
+        : {}; // } // function getCookie(cname) { // var name = cname + "="; // var ca = document.cookie.split(';'); // for(var i = 0; i
+        < ca.length; i++) { // var c=c a[i]; // while (c.charAt(0)==' ' ) { // c=c .substring(1); // } // if (c.indexOf(name)==0
+            ) { // return c.substring(name.length, c.length); // } // } // return ""; // } // function setFirstUTM(){ // setCookie( "first_utm",JSON.stringify(getParsedCookie(getCookie( "UTM"))),30); // //console.log( 'first_',getCookie( "UTM")); // } //
+            if(!getCookie( "first_utm") && getCookie( "UTM")){ // setFirstUTM(); // } // let parsedUtm=g etParsedCookie(getCookie( "UTM")); // if(!getCookie( "UTM")){ // UTM[ "pathname"]=p athname; // UTM[ "referrer"]=r eferrer; // console.log(referrer);
+        // } // else{ // UTM[ "pathname"]=p arsedUtm[ "pathname"]; // UTM[ "referrer"]=p arsedUtm[ "referrer"]; // } // let paramsKeys=[ 'utm_source', 'utm_campaign', 'utm_content', 'utm_medium', 'utm_term']; // for(key of paramsKeys){ // if(searchParams.get(key)){
+        // UTM[key]=s earchParams.get(key); // } // else if(getCookie( "UTM")){ // let parsedUTMData=p arsedUtm; // if(parsedUTMData[key]){ // UTM[key]=p arsedUtm[key]; // } // } // } // setCookie( "UTM",JSON.stringify(UTM),30); // if(!getCookie(
+            "first_utm") && getCookie( "UTM")){ // setFirstUTM(); // } // function getParams(){ // console.log( 'inside get params'); // let params="" ; // if( 'utm_source' in window.location.search){ // params=w indow.location.search+ '&pathname='+getCookie(
+            'pathname')+ '&referrer='+getCookie( 'referrer'); // } // else{ // params=` ? pathname=`+getCookie( 'pathname')+ '&referrer='+getCookie( 'referrer')+ '&utm_source='+getCookie( 'utm_source')+ '&utm_campaign='+getCookie( 'utm_campaign')+ '&utm_content='+getCookie(
+            'utm_content'); // } // return params; // } // function checkCookie() { // var med=g etCookie( "utm_medium"); // var comp=g etCookie( "utm_campaign"); // var source=g etCookie( "utm_source"); // jQuery( '.signup-home').click(function(){ // var href=j Query(this).attr(
+            'href'); // var button_text=j Query(this).text(); // webengage.track( "Clicked on CTA", { // referrer : referrer, // "utm_source" : source, // "utm_medium" : med, // "utm_campaign" : comp, // cta_text : button_text, // destination_url : href // });
+        // }); // } // window.onload=c heckCookie; // jQuery( '.link-click').click(function(){ // var href=j Query(this).attr( 'href'); // var button_text=j Query(this).text(); // webengage.track( "Clicked on Link", { // cta_text : button_text, // destination_url
+            : href // }); // }); // }); </script>
+</head>
+
+<body data-rsssl=1 class="home page-template-default page page-id-10113">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P7FQTZ6"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <style type="text/css">
+        .home-header {
+          box-shadow: none !important;
+          background: transparent !important;
+        }
+
+        .home-header nav>ul>li>a {
+            color: #fff;
+        }
+
+        .home-header nav>ul ul>li:first-child {
+            border-radius: 10px 10px 0 0;
+        }
+
+        .home-header nav>ul ul>li:last-child {
+            border-radius: 0 0 10px 10px;
+        }
+
+        .main-banner .white_button:hover {
+            color: #fff !important;
+            border-color: #fff;
+        }
+
+        .home-header nav>ul.sf-js-enabled ul:after {
+            bottom: 100%;
+            left: 50px;
+            border: solid transparent;
+            content: " ";
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+            border-color: rgba(255, 255, 255, 0);
+            border-bottom-color: #ffffff;
+            border-width: 5px;
+            margin-left: -5px;
+        }
+
+        .home-header nav>ul>li.menu-item-has-children:hover {
+            box-shadow: 0px 0px 0px 0px #fff;
+        }
+
+        nav>ul {
+            float: none;
+        }
+
+        nav>li>a {
+            font-weight: 600;
+        }
+
+        nav>ul>li:first-child,
+        nav>ul>li {
+            border: none;
+            box-shadow: none;
+        }
+
+        nav>ul>li:hover:before {
+            background: #ffffff;
+        }
+
+        .home-header .whiteButton,
+        .white_button {
+            background: #fff;
+            color: #333 !important;
+            border: 1px solid #fff;
+        }
+
+        .bg-white {
+            background: #fff;
+        }
+
+        .box-round {
+            border-radius: 26px;
+            overflow: hidden;
+            padding-top: 15px;
+            padding-bottom: 25px
+        }
+
+        .text-primery {
+            color: #5e53c2;
+        }
+
+        .box-head {
+            font-size: 32px;
+        }
+
+        .box-round>.dnd_column_dd_span5 {
+            width: 40.17094017094017% !important;
+        }
+
+        .box-round>.dnd_column_dd_span7 {
+            width: 57.26495726495726% !important
+        }
+
+        .tabs-box .dnd-tabs .ui-tabs-nav li {
+            float: none;
+            display: inline-block;
+            border: 0;
+        }
+
+        .tabs-box .dnd-tabs .ui-tabs-nav li.ui-tabs-active,
+        .tabs-box .dnd-tabs .ui-tabs-nav li:hover a {
+            background: #5405c2;
+            border-radius: 50px;
+        }
+
+        .tabs-box .dnd-tabs .ui-tabs-nav li.ui-tabs-active a {
+            color: #FFF;
+        }
+
+        .tabs-box .dnd-tabs .dnd-tabs-wrapper,
+        .tabs-box .dnd-tabs .ui-tabs-nav li {
+            border: 0;
+            background: transparent;
+        }
+
+        .tabs-box .dnd-tabs .ui-tabs-panel {
+            padding: 25px 6px 5px;
+        }
+
+        .tabs-box .logos p {
+            font-size: 12px;
+            color: #000;
+        }
+
+        .ABt_testimonials_wrapper.picture_middle .testimonial_small,
+        .ABt_testimonials_wrapper_static.picture_middle .testimonial_small {
+            padding-top: 75px;
+            border-radius: 26px;
+        }
+
+        #testimonial_sec .ABt_testimonials_wrapper_static .testimonial_small .source {
+            left: 278px !important;
+        }
+
+        .ABt_testimonials_slide .testimonial_small {
+            margin-bottom: 0;
+        }
+
+        .ABt_testimonials_wrapper.picture_middle .testimonial_small p,
+        .ABt_testimonials_wrapper_static.picture_middle .testimonial_small p {
+            padding-left: 80px;
+            font-style: normal;
+        }
+
+        .home-header .black-logo {
+            display: none !important;
+        }
+
+        .home-header .white-logo {
+            display: block !important;
+        }
+
+        .white-logo {
+            display: none;
+        }
+
+        header a.black-logo {
+            display: block !important;
+        }
+
+        .logos li {
+            margin: 13px 0px;
+        }
+
+        .logos li img {
+            background: #fff;
+            border-radius: 50%;
+            width: 75%;
+            padding: 14px;
+            box-shadow: 0 0 25px #eee;
+        }
+
+        .bg-cover {
+            background-size: cover;
+            background-position: bottom center;
+        }
+
+        #footer_columns {
+            background: #f7f6f6;
+            color: #5f5f5f;
+        }
+
+        #ABdev_main_footer a {
+            color: #5f5f5f;
+        }
+
+        #ABdev_main_footer h3 {
+            color: #030303;
+        }
+
+        #ABdev_main_footer a:hover {
+            color: #5e53c2;
+        }
+
+        #footer_copyright {
+            background: #fff;
+            color: #262626;
+            padding: 10px 0;
+        }
+
+        #ABdev_main_footer ul li {
+            border-bottom: 0px !important;
+        }
+
+        .why-choose strong {
+            font-size: 20px;
+        }
+
+        .ph-40 {
+            padding: 40px 0;
+        }
+
+        .pt-40 {
+            padding-top: 40px;
+        }
+
+        .pb-40 {
+            padding-bottom: 40px;
+        }
+
+        .testimonial-bg {
+            background: url('https://46nwg817z0gu2lj6oi5t3w61-wpengine.netdna-ssl.com/wp-content/uploads/2018/06/testimonials_mobile-bg.png') left bottom no-repeat, url('https://46nwg817z0gu2lj6oi5t3w61-wpengine.netdna-ssl.com/wp-content/uploads/2018/06/testimonials_chat-bg.png.png') right bottom no-repeat;
+        }
+
+        .arrow-icon {
+            position: relative;
+            overflow: visible;
+        }
+
+        .dark-icon a {
+            color: #333 !important;
+        }
+
+        .arrow-icon a {
+            position: absolute;
+            bottom: -107px;
+            border: 0 !important;
+            color: #fff;
+            padding: 0
+        }
+
+        .arrow-icon a.left {
+            left: -5%
+        }
+
+        .arrow-icon a.right {
+            right: -5%;
+        }
+
+        .main-banner {
+            padding-top: 75px;
+            background-position: bottom;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .desktop-bg {
+            background: url('https://d2kh7o38xye1vj.cloudfront.net/wp-content/uploads/2018/06/video_laptop.png') no-repeat;
+            background-size: 100%;
+            width: 100%;
+            height: 344px;
+            padding: 3.8% 14.8% 0 13.6%;
+            margin-top: 70px;
+        }
+
+        .main-banner h2 {
+            font-size: 30px;
+        }
+
+        nav>ul.login>li:hover::before {
+            background: transparent !important
+        }
+
+        .contact_info_widget i {
+            color: #fff;
+        }
+
+        h5 {
+            font-size: 22px;
+        }
+
+        .btn-margin {
+            margin-left: 73px;
+        }
+
+        .abstract {
+            position: absolute;
+            left: 12%;
+        }
+
+        .dnd_container [class*="column_dd_span"] {
+            position: relative;
+            min-height: 0
+        }
+
+        .aq-template-wrapper p {
+            margin: 0
+        }
+
+        .box-round p {
+            margin: 0;
+        }
+
+        .arrow-icon a>i {
+            font-size: 20px !important;
+        }
+
+        .hidden-desktab>* {
+            z-index: 2;
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio:0) {
+            .hidden-phabphone ul {
+                padding-left: 46px !important;
+            }
+            * {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 979px) {
+            /* header Ui fix tablet view */
+            header#ABdev_main_header {
+                height: 60px !important;
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            .features .dnd_column_dd_span3,
+            .global-shipping .dnd_column_dd_span3 {
+                width: 262px;
+                margin-right: 15px;
+            }
+            .desktop-bg {
+                margin-top: 30px;
+            }
+            .ABt_testimonials_wrapper.picture_middle .testimonial_small p,
+            .ABt_testimonials_wrapper_static.picture_middle .testimonial_small p {
+                padding-left: 0;
+                padding-top: 15px;
+                font-style: normal;
+            }
+            .contact_info_widget i {
+                color: #333;
+            }
+            .btn-margin {
+                margin-left: 0;
+            }
+            .main-banner {
+                padding-top: 0
+            }
+            .main-banner h1,
+            .main-banner h2 {
+                font-size: 25px;
+            }
+            .main-banner h2.text-white span {
+                font-size: 18px;
+            }
+            .dnd-animo>img {
+                width: 90%;
+            }
+            .why-choose strong {
+                font-size: 17px;
+            }
+            .black-logo {
+                display: block !important;
+            }
+            .white-logo {
+                display: none !important;
+            }
+            .who_is_for_box>.box-round {
+                text-align: left;
+            }
+            .who_is_for_box>.box-round>.col2 {
+                width: 37px
+            }
+            .who_is_for_box>.box-round>.col10 {
+                width: 74%;
+                margin-top: 0 !important;
+            }
+            .how-works .dnd_column_dd_span3 {
+                padding: 0 5px;
+            }
+            .how-works .dnd_column_dd_span3 h5 {
+                font-size: 17px;
+                line-height: normal;
+                margin-bottom: 0
+            }
+            .integration .dnd-tabs .ui-tabs-nav li {
+                width: 45%;
+            }
+            .integration .dnd-tabs .ui-tabs-nav li a {
+                font-size: 13px;
+                padding: 10px 5px;
+            }
+            .integration .dnd-tabs-wrapper {
+                overflow: auto;
+                margin-bottom: -60px;
+            }
+            .integration .dnd-tabs-wrapper #tab-1 .logos,
+            .integration .dnd-tabs-wrapper #tab-2 .logos {
+                width: 1149px;
+                text-align: left;
+                margin-bottom: 40px;
+            }
+            .integration .dnd-tabs-wrapper #tab-2 .logos {
+                width: 770px;
+            }
+            .features .dnd_section_content,
+            .global-shipping .dnd_section_content {
+                overflow-x: scroll !important;
+                margin-bottom: -55px;
+                white-space: nowrap;
+                scroll-behavior: smooth;
+                transition: transform 0.6s ease;
+                -webkit-transition: -webkit-transform 0.6s ease;
+            }
+            .features .dnd_section_content .dnd_container,
+            .global-shipping .dnd_section_content .dnd_container {
+                width: 1100px;
+                margin-bottom: 40px;
+            }
+            .ABt_testimonials_wrapper.picture_middle .testimonial_small,
+            .ABt_testimonials_wrapper_static.picture_middle .testimonial_small {
+                margin-top: 0;
+            }
+            .home-header .white-logo {
+                display: none !important;
+            }
+            .home-header .black-logo {
+                display: block !important;
+            }
+        }
+
+        @media only screen and (min-width: 980px) {
+            div#logo_menu_bar nav {
+                display: block !important;
+            }
+        }
+
+        @media screen and (min-width: 319px) and (max-width: 373px) {
+            .desktop-bg {
+                height: 147px;
+            }
+        }
+
+        @media screen and (min-width: 374px) and (max-width: 413px) {
+            .desktop-bg {
+                height: 179px;
+            }
+        }
+
+        @media screen and (min-width: 414px) and (max-width: 567px) {
+            .dnd-animo>img {
+                width: 70%;
+            }
+            .desktop-bg {
+                height: 192px;
+            }
+        }
+
+        @media screen and (min-width: 568px) and (max-width: 666px) {
+            .dnd-animo>img {
+                width: 70%;
+            }
+            .ABt_testimonials_wrapper_static .testimonial_small .source {
+                left: 58%;
+            }
+            .desktop-bg {
+                height: 306px
+            }
+        }
+
+        @media screen and (min-width: 667px) and (max-width: 735px) {
+            .dnd-animo>img {
+                width: 70%;
+            }
+            .ABt_testimonials_wrapper_static .testimonial_small .source {
+                left: 48%;
+            }
+            .desktop-bg {
+                height: 306px
+            }
+        }
+
+        @media only screen and (max-width: 767px) {
+            header#ABdev_main_header.active-nav {
+                background-color: #242526 !important;
+                position: fixed !important;
+                z-index: 99999999 !important;
+            }
+            header#ABdev_main_header.active-nav nav {
+                top: 65px;
+                height: calc(100% - 65px);
+                overflow-y: auto;
+            }
+            header#ABdev_main_header.active-nav div#logo {}
+            header#ABdev_main_header.active-nav div#logo a.black-logo {
+                display: none !important;
+            }
+            header#ABdev_main_header.active-nav div#logo a.white-logo {
+                display: block !important;
+            }
+            header#ABdev_main_header.active-nav nav ul#main_menu {
+                float: left !important;
+            }
+            header#ABdev_main_header.active-nav nav ul#main_menu li {
+                background-color: rgba(0, 0, 0, .2);
+                border-bottom: 1px solid rgba(255, 255, 255, .05);
+            }
+            header#ABdev_main_header.active-nav nav ul#main_menu li a {
+                color: #fff;
+                padding: 12px 15px;
+                line-height: 22px;
+            }
+            header#ABdev_main_header.active-nav .span4.bl.left_aligned.mt-lg.left.login_button.hidden-desktop {
+                display: none !important;
+            }
+            header#ABdev_main_header.active-nav .p.clear.hidden-desktop {
+                display: none !important;
+            }
+            header#ABdev_main_header.active-nav ul.pull-right.hidden-phabphone.login {
+                display: inline-block !important;
+                margin: 0;
+                width: 100%;
+                padding: 0;
+            }
+            header#ABdev_main_header.active-nav ul.pull-right.hidden-phabphone.login li {
+                padding: 0;
+                background-color: rgba(0, 0, 0, .2);
+                border-bottom: 1px solid rgba(255, 255, 255, .05);
+            }
+            header#ABdev_main_header.active-nav ul.pull-right.hidden-phabphone.login li a {
+                color: #fff !important;
+                padding: 15px 15px;
+                line-height: 1;
+                background: transparent;
+                margin: 0 !important;
+                border-color: transparent;
+            }
+            header#ABdev_main_header.active-nav nav ul#main_menu li ul.navi.first.menu-depth-1 {
+                padding: 0;
+                background: #fff;
+                transition: max-height .5s ease;
+                max-height: 650px;
+            }
+            header#ABdev_main_header.active-nav nav ul#main_menu li ul.navi.first.menu-depth-1 li {
+                background: transparent;
+                height: auto;
+                padding: 0;
+            }
+            header#ABdev_main_header.active-nav nav ul#main_menu li ul.navi.first.menu-depth-1 li a {
+                color: #58595b !important;
+            }
+            ul.navi.first.menu-depth-1 {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height .5s ease;
+            }
+            div#logo_menu_bar nav {
+                width: 100% !important;
+                height: 0;
+            }
+            header#ABdev_main_header.active-nav div#ABdev_menu_toggle {
+                background: transparent;
+                border: 0;
+            }
+            header#ABdev_main_header.active-nav div#ABdev_menu_toggle i {
+                font-size: 16px !important;
+                display: none;
+            }
+            #ABdev_menu_toggle {
+                width: 27px !important;
+                height: 19px !important;
+                position: relative;
+                margin: 0px auto;
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+                -webkit-transition: .5s ease-in-out;
+                -moz-transition: .5s ease-in-out;
+                -o-transition: .5s ease-in-out;
+                transition: .5s ease-in-out;
+                cursor: pointer;
+                border: 0;
+                background: transparent !important;
+            }
+            #ABdev_menu_toggle span {
+                display: block;
+                position: absolute;
+                height: 2px;
+                width: 100%;
+                background: #000;
+                border-radius: 9px;
+                opacity: 1;
+                left: 0;
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+                -webkit-transition: .25s ease-in-out;
+                -moz-transition: .25s ease-in-out;
+                -o-transition: .25s ease-in-out;
+                transition: .25s ease-in-out;
+            }
+            #ABdev_menu_toggle span:nth-child(2) {
+                top: 0px;
+            }
+            #ABdev_menu_toggle span:nth-child(3) {
+                top: 9px;
+            }
+            #ABdev_menu_toggle span:nth-child(4) {
+                top: 18px;
+            }
+            #ABdev_menu_toggle.open-d span:nth-child(2) {
+                top: 10px;
+                -webkit-transform: rotate(135deg);
+                -moz-transform: rotate(135deg);
+                -o-transform: rotate(135deg);
+                transform: rotate(135deg);
+            }
+            #ABdev_menu_toggle.open-d span:nth-child(3) {
+                opacity: 0;
+                left: -60px;
+            }
+            #ABdev_menu_toggle.open-d span:nth-child(4) {
+                top: 10px;
+                -webkit-transform: rotate(-135deg);
+                -moz-transform: rotate(-135deg);
+                -o-transform: rotate(-135deg);
+                transform: rotate(-135deg);
+            }
+            #ABdev_menu_toggle i.ci_icon-menu {
+                display: none;
+            }
+            header#ABdev_main_header.active-nav div#ABdev_menu_toggle span {
+                background: #fff;
+            }
+            .admin-bar header#ABdev_main_header.active-nav nav {}
+            /* div#ABdev_menu_toggle {
+    top: 25px!important;
+} */
+            div#logo_menu_bar .login_button .bold {
+                background-color: #705CE4 !important;
+                color: #fff !important;
+                font-size: 14px !important;
+                padding: 9px 16px !important;
+                border-radius: 4px !important;
+                line-height: 12px !important;
+                margin: 0px !important;
+                font-weight: 100 !important;
+            }
+            div#logo_menu_bar .login_button {
+                margin: 0px !important;
+                margin-right: 15px !important;
+            }
+            div#logo {
+                display: flex !important;
+            }
+            div#ABdev_menu_toggle {
+                top: 1px !important;
+                margin: 0px !important;
+                right: 0px !important;
+                position: relative !important;
+                transition: 0s !important;
+                transform: none !important;
+                float: right !important;
+            }
+            #ABdev_menu_toggle span {
+                height: 4px !important;
+                background: #261559 !important;
+            }
+        }
+    </style>
+
+
+    <header id="ABdev_main_header" class="clearfix home-header b0">
+        <!--<div class="header_note">
+	<p>Get 100% Cashback Upto Rs.200 on Your First Recharge | Use Code: FLAT200 | Valid Till 31st Aug. <span class="tooltip">*T&C Apply<span class="tooltiptext">Applicable on First Recharge Only. Cashback will be credited in the Shiprocket wallet and is non-refundable.</span></span>. <a class="link-und" href="https://app.shiprocket.in/login" target="_blank">Login</a><a href="https://app.shiprocket.in/register" target="_blank">Sign Up</a></p>
+</div> -->
+
+        <div id="logo_menu_bar">
+            <div class="container">
+                <div id="logo">
+                    <a href="index.html" class="white-logo" style="display: none;">
+					<img  src="logo4.png" alt="Shiprocket logo">
+				</a>
+                </div>
+                <div class="wid-10-cls">
+                    <div class="span4  bl left_aligned mt-lg left login_button hidden-desktop">
+                        <a href="https://app.shiprocket.in/register" target="_blank" class="p0 ph-lg m0 ml-sm bold">Sign Up</a>
+                    </div>
+                    <nav>
+                        <div class="search-toggle">
+                            <i></i>
+                        </div>
+                        <ul id="main_menu" class="">
+                            <li id="nav-menu-item-27916" class="main-menu-item   menu-item-depth-0 menu-item menu-item-type-custom menu-item-object-custom normal_menu_item"><a href="/track" class="menu-link  main-menu-link"><span>Track Order</span></a></li>
+                        </ul>
+                        <ul class="pull-right hidden-phabphone login">
+
+                            <li><a href="/login" target="_blank" class="ml0 mr0 mb0 mt-lg bold dnd-button dnd-button_rounded dnd-button_blue dnd-button_medium ml0 whiteButton main-menu-link signup-home">Try it Free</a></li>
+                            <li style="background: transparent;border-bottom: 0;">
+
+                            </li>
+                        </ul>
+
+
+                    <div id="ABdev_menu_toggle"><i class="ci_icon-menu"></i><span></span><span></span><span></span></div>
+                </div>
+            </div>
+        </div>
+        <div id="search-container" class="search-box-wrapper hide">
+            <div class="search-box">
+                <div class="widget_search">
+                    <form name="search" autocomplete="off" id="search_header" method="get" action="https://www.shiprocket.in">
+                        <input name="s" autocomplete="off" type="text" placeholder="Type Your Request and Press Enter" value="">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="dnd_section_dd text-white pb-xl main-banner home-bannern" style="background-color:#5405c2; background-image:url('https://images.pexels.com/photos/2581022/pexels-photo-2581022.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span12 pt-lg">
+                    <h1 class="text-white mb-xl mt-xl " style=""><span>Delivering you more than expected <br> with Price Predictability Powered by Machine Learning</span></h1>
+
+                    <div class="dnd_clear"></div>
+                    <div class="mb-xl hidden-phabphone">
+                        <div class="banner-p" style="font-size: 20px; line-height: 35px;">Efficiently Ship with Confidence with our AI-Driven Price Prediction!</div>
+                    </div>
+                    <div class="dnd_clear"></div>
+                    <div class="mb-xl hidden-desktab"></div><a href="/login" target="_blank" class="dnd-button dnd-button_light dnd-button_rounded dnd-button_medium ml0 white_button signup-home">Ship now</a></div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+
+    <section class="dnd_section_dd pt home-ban-pro pb0 center_aligned" style="background-color:#5405c2;">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span12 ">
+                    <h4 class="text-white hidden-phabphone"><span>Unleash the Power of Machine Learning to Make Shipping Easier and More Affordable</span></h4>
+                    <h5 class="text-white hidden-desktab"><span>We power ecommerce businesses by making shipping easy</span></h5>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+    <section class="dnd_section_dd  hidden-desktab p0 arrow-icon" style="background-color:#5405c2;">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span12 ">
+                    <div class="text-white"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="dnd_section_dd pt-lg pb-40 center_aligned bg-cover features ph-xl four_box" style="background-color:#5405c2;">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span3 mb ph">
+                    <div class="bg-white pt-xl box-round">
+                        <div class="dnd_column_dd_span5 br pv">
+                           <img src="https://www.pngkey.com/png/full/115-1159352_machine-learning-brain-gears.png" alt="">
+                        </div>
+                        <div class="dnd_column_dd_span7 pt ml0">
+                            <div class="text-primery box-head mb">#1</div>
+                            <div class="pl">Power of Machine learing</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dnd_column_dd_span3 mb ph">
+                    <div class="bg-white pt-xl box-round">
+                        <div class="dnd_column_dd_span5 br pv ">
+                            <!-- <i class="fa-solid fa-briefcase fa-5x"></i> -->
+                            <img src="https://www.freeiconspng.com/uploads/seller-icon-13.png" alt="">
+                        </div>
+                        <div class="dnd_column_dd_span7 pt ml0">
+                            <div class="text-primery box-head mb">#2</div>
+                            <div class="pl">Connecting sellers</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dnd_column_dd_span3 mb ph">
+                    <div class="bg-white pt-xl box-round">
+                        <div class="dnd_column_dd_span5 br pv ">
+                           <img src="https://uxwing.com/wp-content/themes/uxwing/download/transportation-automotive/plane-icon.png" alt="">
+                        </div>
+                        <div class="dnd_column_dd_span7 pt ml0">
+                            <div class="text-primery box-head mb">#3</div>
+                            <div class="pl">Shipping internationally</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dnd_column_dd_span3 mb pl pr0 mr0">
+                    <div class="bg-white pt-xl box-round ">
+                        <div class="dnd_column_dd_span5 br pv">
+                           <img src="https://png.pngtree.com/png-vector/20190704/ourlarge/pngtree-world-map-icon-png-image_1541035.jpg" alt="">
+                        </div>
+                        <div class="dnd_column_dd_span7 pt ml0">
+                            <div class="text-primery box-head mb">#4</div>
+                            <div class="pl">10+ countries covered</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="dnd_section_dd center_aligned pb0 pt-40" style="">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span12 ">
+                    <h3 class="hidden-phabphone why-choose"><span>
+<p class="mb0 center_aligned">Why choose Shipez?</p>
+</span></h3>
+                    <h5 class="hidden-desktop why-choose"><span>
+<p class="mb0 center_aligned">Why choose Shiprez?</p>
+</span></h5>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+
+    <section class="dnd_section_dd center_aligned pt hidden-phabphone" style="">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span12 "></div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="dnd_section_dd pb-40 custom-left-none " style="">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span6 ">
+                    <div class="hidden-desktab">
+                        <h5 class="mt-lg">Why Choose Us<span style="color: #ff9900;"> for Shipping Services with Price Prediction Using Machine Learning Model
+                        </span> and reduce cost</h5>
+                    </div>
+                    <div class="dnd-animo mb" data-animation="none" data-duration="1000" data-delay="0"><img width="494" height="325" src="delivery.gif" alt=""></noscript></div>
+                </div>
+                <div class="dnd_column_dd_span6 ">
+                    <div class="hidden-phabphone">
+                        <div class="abstract reduce-abst"><img decoding="async" src="https://www.nindelivers.com/wp-content/uploads/2019/12/ecommerce-shipping-solutions.jpeg" alt="" width="41" height="32" data-lazy-src="../wp-content/uploads/2018/06/abstract_02.png"><noscript><img decoding="async" src="../wp-content/uploads/2018/06/abstract_02.png" alt="" width="41" height="32"></noscript></div>
+                    </div>
+                    <h5 class="hidden-phabphone"><span><img decoding="async" class="pull-left mr" src="https://www.nindelivers.com/wp-content/uploads/2019/12/ecommerce-shipping-solutions.jpeg" alt="" width="60" height="60" data-lazy-src="../wp-content/uploads/2018/06/grow_business.png"><noscript><img decoding="async" class="pull-left mr" src="../wp-content/uploads/2018/06/grow_business.png" alt="" width="60" height="60"></noscript></p>
+<div class="pull-left pt-lg"><strong>Why Choose Us<span style="color: #ff9900;"> for Shipping Services with Price Prediction Using Machine Learning Model
+</span></strong></div>
+                </span>
+                </h5>
+                <div class="dnd_clear"></div>
+                <div class="hidden-phabphone ml-xl pl-lg">
+                    <ul class="pl-xl">
+                        <li>
+                            For businesses in the shipping and logistics industry, having an accurate price prediction system is a must-have. By leveraging the power of machine learning, businesses can take their pricing accuracy and customer service to a whole new level. With our AI powered shipping services, businesses can be sure that their customers are getting the best possible deal.
+                        </li>
+
+
+<li>
+                        Our software is designed for easy integration with existing logistics software and provides insights about the pricing trends and other factors that could influence the price of goods. We also provide predictive analytics to help businesses plan their strategies and make better decisions.
+
+                    </li>
+                    <li>
+                        Our machine learning model is highly accurate and robust, so businesses can trust that they are always getting the best price. We also provide comprehensive customer support to help businesses understand and make the most of our services.
+
+                    </li>
+                    <li>
+                        Furthermore, our software can be easily scaled to fit the needs of businesses of all sizes. We use cloud-based technology to ensure that businesses can access our services from anywhere, anytime.
+                    </li>
+                        <li>
+                        Choose us for your shipping services and price prediction needs and get the best possible service and pricing accuracy.
+                    </li>
+                    </ul>
+                </div>
+
+                <div class="hidden-desktab">Reduce shipping cost &amp; enjoy a reach of 24000 pin codes across 220 countries and territories. Enjoy easy integration with 17+ courier partners.</div><a href="/features" target="_self" class="dnd-button dnd-button_blue dnd-button_rounded dnd-button_medium dnd-button_transparent mt-lg btn-margin">Know More</a></div>
+        </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="dnd_section_dd pt-40 pb-40 custom-left-none " style="">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span6 right">
+                    <div class="hidden-desktab">
+                        <h5 class="pt mt-lg"><strong><span style="color: #9b4bde;">Improve</span></strong> shipping experience</h5>
+                    </div>
+                    <div class="dnd-animo mb" data-animation="none" data-duration="1000" data-delay="0"><img width="494" height="325" src="delivery2.gif" alt=""></noscript></div>
+                </div>
+                <div class="dnd_column_dd_span6 left pt-xl">
+                    <div class="hidden-phabphone">
+                        <div class="abstract" style="top: 7px;"><img decoding="async" src="" alt="" width="41" height="32"></noscript></div>
+                    </div>
+                    <div class="dnd_clear"></div>
+                    <h5 class="pt hidden-phabphone"><span>
+<div class="pull-left mr"><img decoding="async" class="" src="delivery2.gif" alt="" width="60" height="60" data-lazy-src="../wp-content/uploads/2018/06/shipping_quality.png"><noscript><img decoding="async" class="" src="../wp-content/uploads/2018/06/shipping_quality.png" alt="" width="60" height="60"></noscript></div>
+<div class="pull-left pt-lg"><strong><span style="color: #9b4bde;">Improve</span></strong> shipping experience</div>
+                </span>
+                </h5>
+                <div class="dnd_clear"></div>
+                <div class="mt hidden-phabphone ml-xl pl-lg">
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Benefits of <a title="Courier Recommendation Engine" href="#">our price prediction model</a><br />
+</strong></li>
+                    </ul>
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Deliver smartly</strong></li>
+                    </ul>
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Track your order in just single click</strong></li>
+                    </ul>
+                </div>
+
+                <a
+                    href="/features" target="_self" class="dnd-button dnd-button_blue dnd-button_rounded dnd-button_medium dnd-button_transparent mt-lg btn-margin">Know More</a>
+            </div>
+        </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="dnd_section_dd pt-40 pb-40 custom-left-none " style="">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span6 ">
+                    <div class="hidden-desktab">
+                        <h5 class="mt-lg"><strong><span style="color: #ffd74d;">Best experince</span></strong> for for business as well as customers</h5>
+                    </div>
+                    <div class="dnd-animo mb" data-animation="none" data-duration="1000" data-delay="0"><img width="494" height="325" src="delivery3.gif" alt="" data-lazy-src=""><noscript><img width="494" height="325" src="https://d2kh7o38xye1vj.cloudfront.net/wp-content/uploads/2021/03/superior_experience_customers.png" alt=""></noscript></div>
+                </div>
+                <div class="dnd_column_dd_span6 pt-xl">
+                    <div class="hidden-phabphone">
+                        <div class="abstract" style="top: 7px;"><img decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2041%2032'%3E%3C/svg%3E" alt="" width="41" height="32" data-lazy-src="../wp-content/uploads/2018/06/abstract_02.png"><noscript><img decoding="async" src="" alt="" width="41" height="32"></noscript></div>
+                    </div>
+                    <div class="dnd_clear"></div>
+                    <h5 class="hidden-phabphone pt"><span>
+<div class="pull-left mr"><img decoding="async" src="delivery3.gif" alt="" width="60" height="60" data-lazy-src="../wp-content/uploads/2018/06/superior_experience.png"><noscript><img decoding="async" src="../wp-content/uploads/2018/06/superior_experience.png" alt="" width="60" height="60"></noscript></div>
+<div class="pull-left pt-lg"><strong><span style="color: #ffd74d;">Superior experience</span></strong> for your customers</div>
+                </span>
+                </h5>
+                <div class="dnd_clear"></div>
+                <div class="hidden-phabphone ml-xl pl-lg">
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>responsive order tracking for customers</strong></li>
+                    </ul>
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Package's handled carefully</strong></li>
+                    </ul>
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Price prediction and services suggestion</strong></li>
+                    </ul>
+                </div>
+
+        </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="dnd_section_dd pt-40 pb-lg custom-left-none " style="">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span6 right">
+                    <div class="hidden-desktab">
+                        <h5 class="mt-lg"><strong><span style="color: #f35897;">Easy shipping</span></strong> &amp; with shipez</h5>
+                    </div>
+                    <div class="dnd-animo mb" data-animation="none" data-duration="1000" data-delay="0"><img width="494" height="325" src="delivery4.gif" alt=""></noscript></div>
+                </div>
+                <div class="dnd_column_dd_span6 left">
+                    <div class="hidden-phabphone pt-lg">
+                        <div class="abstract"><img decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2041%2032'%3E%3C/svg%3E" alt="" width="41" height="32" data-lazy-src="../wp-content/uploads/2018/06/abstract_02.png"><noscript><img decoding="async" src="../wp-content/uploads/2018/06/abstract_02.png" alt="" width="41" height="32"></noscript></div>
+                    </div>
+                    <h5 class="hidden-phabphone pt-xl"><span>
+<div class="pull-left mr"><img decoding="async" src="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2060%2060'%3E%3C/svg%3E" alt="" width="60" height="60" data-lazy-src="../wp-content/uploads/2018/06/automated_shipping.png"><noscript><img decoding="async" src="../wp-content/uploads/2018/06/automated_shipping.png" alt="" width="60" height="60"></noscript></div>
+<div class="pull-left pt-lg"><strong><span style="color: #f35897;">Easy shipping </span></strong> with shipez</div>
+                </span>
+                </h5>
+                <div class="dnd_clear"></div>
+                <div class="hidden-phabphone ml-xl pl-lg">
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Ship internatioanally</strong></li>
+                    </ul>
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Stock Management for warehouses</strong></li>
+                    </ul>
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Multi locations pickup available</a></strong></li>
+                    </ul>
+                    <ul class="pl-xl">
+                        <li class="mb"><strong>Easy management of your resources and time</strong></li>
+                    </ul>
+                </div>
+                <div class="hidden-desktab">Integrate easily with sales channels like Amazon, Shopify, Magento, etc. Benefit from features like business analytics and <a href="..features/multiple-pick-up-locations/">pickup from multiple locations</a>.</div><a href="/features/automated-shipping-solutions/"
+                    target="_self" class="dnd-button dnd-button_blue dnd-button_rounded dnd-button_medium dnd-button_transparent mt-lg btn-margin">Know More</a></div>
+        </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="dnd_section_dd text-white ph-40 " style="background-color:#3aa8e6;">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span6 ">
+                    <div class="hidden-phabphone pt-xl mt-xl"><img decoding="async" src="https://www.nindelivers.com/wp-content/uploads/2019/12/ecommerce-shipping-solutions.jpeg" alt="" width="462" height="274" data-lazy-src="../wp-content/uploads/2018/06/who_is_it_for_01.png"><noscript><img decoding="async" src="../wp-content/uploads/2018/06/who_is_it_for_01.png" alt="" width="462" height="274"></noscript></div>
+                    <h3
+                        class="hidden-desktop text-white"><span>Who is it for?</span></h3>
+                        <div class="dnd_clear"></div>
+                        <div class="mt-lg mb-xl text-right"><strong>Get Your Shipments Delivered Right on Time and Budget with machine learning powered price predictions - From ChatSonic Shipping Services!</strong></div>
+                </div>
+                <div class="dnd_column_dd_span6 who_is_for_box">
+                    <div class="bg-white p-xl box-round text-gray-dark mb">
+                        <div class="pull-left col2 mr"><img decoding="async" src="seller.gif" alt="Social Seller Icon" width="37" height="37"><noscript><img decoding="async" src="seller.gif" alt="Social Seller Icon" width="37" height="37"></noscript></div>
+                        <div class="pull-left mt col10"><strong>Shipez for Social Business</strong></div>
+                        <div class="dnd_clear pt pl-xl ml-lg">Price prediction,affordable,secure and </div>
+                    </div>
+                    <div class="bg-white p-xl box-round text-gray-dark mb">
+                        <div class="pull-left mr col2"><img decoding="async" src="customer.gif" alt="Marketplace Icon" width="37" height="37" data-lazy-src=""><noscript><img decoding="async" src="customer.gif" alt="Marketplace Icon" width="37" height="37"></noscript></div>
+                        <div class="pull-left mt col10"><strong>Shipez for Customer</strong></div>
+                        <div class="dnd_clear pt pl-xl ml-lg">User fiendly,all you need is your order id <a href="..features/recommendation-engine/">CORE</a>, multiple pickup locations and <a href="..features/serviceable-pin-codes/">widest reach</a>.</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <section class="dnd_section_dd pt-40 pb0 center_aligned" style="background-color:#ffffff;">
+
+
+
+    </section>
+
+
+
+    <section class="dnd_section_dd pt0 pb-40 center_aligned how-works features ph-xl" style="">
+
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span3 mb">
+
+
+                    <div class="dnd-animo " data-animation="none" data-duration="1000" data-delay="0"><img width="216" height="149" src="location.gif" alt="" data-lazy-src=""><noscript><img width="216" height="149" src="location.gif" alt=""></noscript></div>
+                    <h5><span>1. Choose your shipment</span></h5>
+                    <div class="hidden-phabphone">Select where do we need to pick your package from and you're all set to go</div>
+                </div>
+                <div class="dnd_column_dd_span3 mb">
+                    <div class="dnd-animo " data-animation="none" data-duration="1000" data-delay="0"><img width="216" height="149" src="storage.gif" alt="" ><noscript><img width="216" height="149" src="storage.gif" alt=""></noscript></div>
+                    <h5><span>2. Select your warehouse </span></h5>
+                    <div class="hidden-phabphone">select the location of warehouses where you want to ship the producst from</div>
+                </div>
+                <div class="dnd_column_dd_span3 mb">
+                    <div class="dnd-animo " data-animation="none" data-duration="1000" data-delay="0"><img width="216" height="149" src="pickup.gif" alt=""><noscript><img width="216" height="149" src="pickup.gif" alt=""></noscript></div>
+                    <h5><span>3.we pick your order</span></h5>
+                    <div class="hidden-phabphone">We pick your order with utmost care</div>
+                </div>
+                <div class="dnd_column_dd_span3 mb mr0 pr0">
+                    <div class="dnd-animo " data-animation="none" data-duration="1000" data-delay="0"><img width="216" height="149" src="track.gif" alt=""><noscript><img width="216" height="149" src="track.gif" alt=""></noscript></div>
+                    <h5><span>4. Track</span></h5>
+                    <div class="hidden-phabphone">We keep you notified about all the updates of the order status </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+
+    <section class="dnd_section_dd cstm-scrl integration ph-40" style="background-color:#f9f9f9;">
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span12 tabs-box center_aligned">
+                    <h2 class=" mt0 mb-xl cstm-h2"><span>Sell Worldwide, Ship Using Shipez</span></h2>
+
+                    </div>
+                </div>
+            </div>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section class="dnd_section_dd center_aligned pb0 pt-xl hidden-phabphone footer-upper" style="background-color:#ffffff;">
+        <div class="dnd_section_content">
+            <div class="dnd_container">
+                <div class="dnd_column_dd_span12 ">
+                    <div class="dnd-animo animated none" data-animation="none" data-duration="1000" data-delay="0" style="visibility: visible; animation-duration: 1s; animation-timing-function: linear; animation-iteration-count: 1;"><img width="570" height="223" src="footer.gif" alt="img"><noscript><img width="570" height="223" src="https://d2kh7o38xye1vj.cloudfront.net/wp-content/uploads/2021/03/footer_image.png" alt="img"></noscript></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer section -->
+    <footer id="ABdev_main_footer">
+        <div id="footer_default_container">
+
+
+            <div id="footer_columns">
+                <div class="container">
+                    <div class="row">
+                        <div class="span3 clearfix">
+                            <div id="nav_menu-7" class="widget widget_nav_menu">
+                                <h3 class=footer-widget-heading>Products</h3>
+                                <div class="menu-our-products-container">
+                                    <ul id="menu-our-products" class="menu">
+                                        <li id="menu-item-19174" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-19174"><a href=#">Shipez Ship</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="footer_copyright">
+                <div class="container">
+                    <div class="row">
+                        <a href="#" id="back_to_top" title="Back to top"></a>
+                        <div class="span6 footer_copyright">
+
+                        </div>
+                        <div id="footer_menu" class="span6 footer_credits right_aligned">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="footer-bb">
+        <div class="container">
+            <div class="row">
+                <div class="span6 clearfix">
+                    <p class="footer_copyright">Copyright &#9400; 2023 Shipez. All Rights Reserved.</p>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <script type="rocketlazyloadscript">
+        jQuery(document).ready(function(){ jQuery('.signup-home').attr("onclick", "trackOutboundLink('https://app.shiprocket.in/register'); return false;"); jQuery('.freeSignupTrack').attr("onclick", "trackOutboundLink('https://app.shiprocket.in/register'); return
+        false;"); // For feature page 6 block var xd = jQuery('#page_shiprocket_features .dnd_section_content .dnd_column_dd_span4:last .feature_blocks:nth-child(2) p'); var txty = "Don’t limit your success with shipping limitations. Let your products
+        reach maximum people, as we offer you 10,000+ serviceable pincodes in India. These numbers pincodes are subject to change every month. To know more, please contact our sales representative." xd.html(txty); jQuery('#more_products .dnd_container
+        .dnd_column_dd_span3:not(:first):not(:eq(1))').remove(); jQuery('#more_products .dnd_container .dnd_column_dd_span3').addClass('dnd_column_dd_span6').removeClass('dnd_column_dd_span3'); jQuery('#more_products .dnd_container .dnd_column_dd_span6:last').find('img').attr('src','/wp-content/uploads/2016/02/logo.png');
+        jQuery('#more_products .dnd_container .dnd_column_dd_span6:last').find('a').attr('href','https://kraftly.com'); if(location.pathname == "/channel-partners/"){ jQuery('.portfolio_item:has(.portfolio_title:contains(Snapdeal))').remove(); } if(location.pathname
+        == "/shipping-partners/"){ jQuery('.portfolio_item:has(.portfolio_title:contains(Firstflight))').remove(); } jQuery('#shipping_partners_2 .dnd_container .dnd_column_dd_span2:first').find('img').attr('src','/wp-content/uploads/2016/02/gojavas.png');
+        jQuery('#channel_partners .dnd_container .dnd_column_dd_span2.img_cols:eq(1) .dnd-animo:first').find('img').attr('src','https://www.shiprocket.in/wp-content/uploads/2016/02/prestashop.png'); var atups = jQuery('h5:contains(Why UPS Is Our Shipping
+        Partner?)').next('ul'); atups.find('li:first').html('Countries Covered: <strong>US, UK, Europe, Canada etc</strong>'); }); jQuery(".features-in-page").find("br").remove(); if(jQuery(window).width()
+        < 768){ jQuery(window).unbind(); jQuery(
+            '.is-featr h2').append( '<i class="icon-plus"></i>'),jQuery( '.is-featr h2').nextAll( '.row').hide(); //$( '.is-featr h2:first').nextAll( '.row').show(); jQuery( '.is-featr h2').click(function(){ if(jQuery(this).children( 'i').hasClass( 'icon-plus')){ jQuery(this).children(
+            'i').removeClass( 'icon-plus').addClass( 'icon-minus') } else { jQuery(this).children( 'i').removeClass( 'icon-minus').addClass( 'icon-plus') } jQuery(this).nextAll( '.row').slideToggle(500); }); } jQuery( '.is-menu-vertical li').click(function(){
+            jQuery( '.is-menu-vertical').find( "li").removeClass( 'active'); jQuery(this).addClass( 'active'); }); </script>
+            <script type="text/x-template" id="calcComponentMarkup">
+                <div class="mainParentDiv calcComponentStyle">
+
+                    <h2 v-if="title">{{title}}</h2>
+
+                    <!-- International Form -->
+                    <div class="intForm" :class="customClass" v-if="formLocation == 'international'">
+                        <div class="innerDiv">
+                            <div class="formSide">
+                                <div class="domesticPickupPincode">
+                                    <label for="intPickupPincode">Pick-up Area Pincode*</label>
+                                    <input id="intPickupPincode" type="number" v-model="intPickupPincode" placeholder="Enter 6 digit Pickup Area Pincode" onkeypress="if(this.value.length == 6) return false;">
+                                    <small>{{intPickupErrorMsg}}</small>
+                                </div>
+                                <div class="country">
+                                    <label for="country">Country/Region*</label>
+                                    <select id="country" v-if="countryAvailable == true" v-model="isDefaultCountry ? ChangeCountrySelect : countrySelect" :disabled="disabledInput">
+									<option :value="country.iso_code_2" v-for="country in allCountry">{{country.name}}</option>
+								</select>
+                                </div>
+                                <div class="domesticWeight">
+                                    <label for="domesticWeight">Weight*</label>
+                                    <div>
+                                        <input id="domesticWeight" type="number" v-model="domesticWeight" placeholder="Enter weight" onkeypress="if(this.value.length == 6) return false;">
+                                        <span>kg</span>
+                                    </div>
+                                    <small>{{weightErrorMsg}}</small>
+                                </div>
+                                <div class="dimensions">
+                                    <label>Dimensions</label>
+                                    <div>
+                                        <input type="number" v-model="length" placeholder="Length">
+                                        <p>X</p>
+                                        <input type="number" v-model="width" placeholder="Width">
+                                        <p>X</p>
+                                        <input type="number" v-model="height" placeholder="Height">
+                                        <input type="text" value="CM" disabled>
+                                    </div>
+                                </div>
+                                <div class="internationalButton">
+                                    <button @click="getInternationalData" :disabled="disabledButton">Calculate</button>
+                                    <div class="loader" v-if="loader"></div>
+                                    <a href="javascript:void(0);" class="ml-xl" id="intFormPopupBTN" @click="intFormPopupBTN" v-if="isDefaultCountry">Get Complete Rate Sheet</a>
+                                </div>
+                            </div>
+
+                            <!-- Internatinal Data Container -->
+                            <div class="intCalcResponse dataTabs" :class="customClass" v-if="intDataAvailable == true && formLocation == 'international'">
+
+                                <div class="tabContent">
+                                    <h4 v-if="isDefaultCountry">Courier Charges from India to {{ isDefaultCountry ? staticDefaultCountry : countrySelect }}</h4>
+                                    <h4 v-if="isNotService"><strong>{{notServiceMsg}}</strong></h4>
+
+                                    <table v-else>
+                                        <thead>
+                                            <tr>
+
+                                                <th>Courier Name</th>
+                                                <th>Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(data, index) in intData">
+
+                                                <td>
+                                                    {{data.courier_name}}
+                                                </td>
+                                                <td>
+                                                    {{ formatCurrency( data.rate.rate ) }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+
+                                <!-- Footer Container -->
+                                <div class="taxBottomBox" v-if="isNotService === false">
+                                    <a href="https://app.shiprocket.in/register?source=SRX" target="_blank">Start Shipping Now</a>
+                                </div>
+                            </div>
+                            <!-- end container -->
+                        </div>
+                    </div>
+
+                    <!-- domestic form -->
+                    <div class="domesticForm" :class="customClass" v-if="formLocation == 'domestic'">
+                        <div>
+                            <div class="domesticPickupPincode">
+                                <label for="domesticPickupPincode">Pick-up Area Pincode*</label>
+                                <input id="domesticPickupPincode" type="number" v-model="domesticPickupPincode" placeholder="Enter 6 digit Pickup Area Pincode" onkeypress="if(this.value.length == 6) return false;" :disabled="disabledInput">
+                                <small>{{pickupErrorMsg}}</small>
+                            </div>
+                            <div class="domesticDeliveryPincode">
+                                <label for="domesticDeliveryPincode">Delivery Area Pincode*</label>
+                                <input id="domesticDeliveryPincode" type="number" v-model="domesticDeliveryPincode" placeholder="Enter 6 digit Delivery Area Pincode" onkeypress="if(this.value.length == 6) return false;" :disabled="disabledInput">
+                                <small>{{deliveryErrorMsg}}</small>
+                            </div>
+                            <div class="domesticWeight" v-if="singleBlogForm == false">
+                                <label for="domesticWeight">Weight*</label>
+                                <div>
+                                    <span v-if="forBlog">kg</span>
+                                    <input id="domesticWeight" type="number" v-model="domesticWeight" placeholder="Enter weight" onkeypress="if(this.value.length == 6) return false;">
+                                    <span v-if="forBlog == false">kg</span>
+                                </div>
+                                <small>{{weightErrorMsg}}</small>
+                            </div>
+                        </div>
+                        <div class="secondDiv weightWrapperBlog" v-if="singleBlogForm">
+                            <div class="domesticWeight">
+                                <label for="domesticWeight">Weight*</label>
+                                <div>
+                                    <span v-if="forBlog">kg</span>
+                                    <input id="domesticWeight" type="number" v-model="domesticWeight" placeholder="Enter weight" onkeypress="if(this.value.length == 6) return false;">
+                                    <span v-if="forBlog == false">kg</span>
+                                </div>
+                                <small>{{weightErrorMsg}}</small>
+                            </div>
+                            <div class="dimensions">
+                                <label>Dimensions (Optional)</label>
+                                <div>
+                                    <input type="number" v-model="length" placeholder="Length">
+                                    <p>X</p>
+                                    <input type="number" v-model="width" placeholder="Width">
+                                    <p>X</p>
+                                    <input type="number" v-model="height" placeholder="Height">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thirdDiv">
+                            <div class="paymentMode">
+                                <label>Payment Mode*</label>
+                                <div>
+                                    <div class="radioWrap">
+                                        <input type="radio" id="prepaid" value="0" v-model="paymentMode" />
+                                        <label for="prepaid">Prepaid</label>
+                                    </div>
+                                    <div class="radioWrap">
+                                        <input type="radio" id="cod" value="1" v-model="paymentMode" />
+                                        <label for="cod">Cash on Delivery</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shipmentValue">
+                                <label for="shipmentValue">Shipment Value</label>
+                                <input id="shipmentValue" type="number" v-model="shipmentValue" placeholder="2000">
+                            </div>
+                        </div>
+                        <div class="domesticButton">
+                            <button @click="getDomesticData" :disabled="disabledButton">Calculate</button>
+                            <div class="loader" v-if="loader"></div>
+                            <button @click="resetData" class="resetButton" v-else>Reset</button>
+                        </div>
+                    </div>
+
+                    <!-- Domestic Data Container -->
+                    <div class="domesticCalcResponse dataTabs" :class="customClass" v-if="domesticDataAvailable == true && formLocation == 'domestic'">
+
+                        <!-- Tab Buttons -->
+                        <ul>
+                            <li v-for="(value, index) in domesticData">
+                                <a @click.prevent="setActive(index)" :class="{ active: isActive(index) }" :href="index">{{index}}</a>
+                            </li>
+                        </ul>
+
+                        <!-- Tab Content -->
+                        <div class="tabContent">
+                            <div id="index" v-for="(value, index) in domesticData" :class="{ active: isActive(index) }" class="tab">
+                                <!-- <small v-if="isDefaultCity == false">Rates are inclusive of GST</small>
+                            <p v-if="isDefaultCity == false">*For COD shipments, fixed COD charge or COD % of the order value whichever is higher will be taken while calculating the COD fee.</p>
+                            <p v-if="isDefaultCity" style="text-align: center;">*Rates shown are for 1/2 kg shipment and are inclusive of GST</p> -->
+                                <div>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Mode</th>
+                                                <th>Freight Charges</th>
+                                                <th v-if="paymentMode == '1'">COD Charges</th>
+                                                <th>Total Charges</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-if="domesticWeight <= 25">
+                                                <td>Express Mode</td>
+                                                <td>{{ formatCurrency( value.air[activeZone].min ) }}</td>
+                                                <td v-if="paymentMode == '1'">{{ formatCurrency( value.air.cod_charges.min ) }}</td>
+                                                <td> {{ formatCurrency( totalCharge( value.air[activeZone].min, value.air.cod_charges.min ) ) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Surface Mode</td>
+                                                <td>{{ formatCurrency( value.surface[activeZone].min ) }}</td>
+                                                <td v-if="paymentMode == '1'">{{ formatCurrency( value.surface.cod_charges.min ) }}</td>
+                                                <td>{{ formatCurrency( totalCharge( value.surface[activeZone].min, value.surface.cod_charges.min ) ) }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Footer Container -->
+                                <div class="taxBottomBox">
+                                    <!-- <p v-if="forBlog">*Surface rate will be charged for minimum 10 kg shipment</p> -->
+                                    <p>For detailed pricing,</p>
+                                    <a href="https://app.shiprocket.in/register">Signup Now</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs Form -->
+                    <div class="tabbingMainDiv" v-if="isTabbing == true">
+                        <!-- Tab version container -->
+                        <div class="tabButtons">
+                            <ul>
+                                <li>
+                                    <a href="#tabDomestic-tab" @click.prevent="tabChange('domestic')">Domestic</a>
+                                </li>
+                                <li>
+                                    <a href="#tabInternational-tab" @click.prevent="tabChange('internatinal')">International</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tabContent">
+                            <div id="tabDomestic-tab" v-if="currentTab == 'domestic'">
+                                <!-- Tab domestic form -->
+                                <div class="domesticForm">
+                                    <div>
+                                        <div class="domesticPickupPincode">
+                                            <label for="domesticPickupPincode">Pick-up Area Pincode*</label>
+                                            <input id="domesticPickupPincode" type="number" v-model="domesticPickupPincode" placeholder="Enter 6 digit Pickup Area Pincode" onkeypress="if(this.value.length == 6) return false;">
+                                            <small>{{pickupErrorMsg}}</small>
+                                        </div>
+                                        <div class="domesticDeliveryPincode">
+                                            <label for="domesticDeliveryPincode">Delivery Area Pincode*</label>
+                                            <input id="domesticDeliveryPincode" type="number" v-model="domesticDeliveryPincode" placeholder="Enter 6 digit Delivery Area Pincode" onkeypress="if(this.value.length == 6) return false;">
+                                            <small>{{deliveryErrorMsg}}</small>
+                                        </div>
+                                    </div>
+                                    <div class="secondDiv">
+                                        <div class="domesticWeight">
+                                            <label for="domesticWeight">Weight*</label>
+                                            <div>
+                                                <input id="domesticWeight" type="number" v-model="domesticWeight" placeholder="Enter weight" onkeypress="if(this.value.length == 6) return false;">
+                                                <span>kg</span>
+                                            </div>
+                                            <small>{{weightErrorMsg}}</small>
+                                        </div>
+                                        <div class="dimensions">
+                                            <label>Dimensions (Optional)</label>
+                                            <div>
+                                                <input type="number" v-model="length" placeholder="Length">
+                                                <p>X</p>
+                                                <input type="number" v-model="width" placeholder="Width">
+                                                <p>X</p>
+                                                <input type="number" v-model="height" placeholder="Height">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="thirdDiv">
+                                        <div class="paymentMode">
+                                            <label>Payment Mode*</label>
+                                            <div>
+                                                <div class="radioWrap">
+                                                    <input type="radio" id="prepaid" value="0" v-model="paymentMode" />
+                                                    <label for="prepaid">Prepaid</label>
+                                                </div>
+                                                <div class="radioWrap">
+                                                    <input type="radio" id="cod" value="1" v-model="paymentMode" />
+                                                    <label for="cod">Cash on Delivery</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="shipmentValue">
+                                            <label for="shipmentValue">Shipment Value</label>
+                                            <input id="shipmentValue" type="number" v-model="shipmentValue" placeholder="2000">
+                                        </div>
+                                    </div>
+                                    <div class="domesticButton">
+                                        <button @click="getDomesticData" :disabled="disabledButton">Calculate</button>
+                                        <div class="loader" v-if="loader"></div>
+                                        <button @click="resetData" class="resetButton" v-else>Reset</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div id="tabInternational-tab" v-if="currentTab == 'internatinal'">
+                                <!-- Tab International Form -->
+                                <div class="intForm">
+                                    <div>
+                                        <div class="domesticPickupPincode ">
+                                            <label for="intPickupPincode">Pick-up Area Pincode*</label>
+                                            <input id="intPickupPincode" type="number" v-model="intPickupPincode" placeholder="Enter 6 digit Pickup Area Pincode" onkeypress="if(this.value.length == 6) return false;">
+                                            <small>{{intPickupErrorMsg}}</small>
+                                        </div>
+                                        <div class="country ">
+                                            <label for="country">Country/Region*</label>
+                                            <select id="country" v-if="countryAvailable == true" v-model="isDefaultCountry ? ChangeCountrySelect : countrySelect">
+											<option :value="country.iso_code_2" v-for="country in allCountry">{{country.name}}</option>
+										</select>
+                                        </div>
+                                    </div>
+                                    <div class="secondDiv">
+                                        <div class="domesticWeight">
+                                            <label for="domesticWeight">Weight*</label>
+                                            <div>
+                                                <input id="domesticWeight" type="number" v-model="domesticWeight" placeholder="Enter weight" onkeypress="if(this.value.length == 6) return false;">
+                                                <span>kg</span>
+                                            </div>
+                                            <small>{{weightErrorMsg}}</small>
+                                        </div>
+                                        <div style="flex-basis: calc(50% - 20px);">
+                                            <div class="dimensions">
+                                                <label>Dimensions</label>
+                                                <div>
+                                                    <input type="number" v-model="length" placeholder="Length">
+                                                    <p>X</p>
+                                                    <input type="number" v-model="width" placeholder="Width">
+                                                    <p>X</p>
+                                                    <input type="number" v-model="height" placeholder="Height">
+                                                    <input type="text" value="CM" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="internationalButton">
+                                        <button @click="getInternationalData" :disabled="disabledButton">Calculate</button>
+                                        <div class="loader" v-if="loader"></div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs Domestic Data -->
+                    <div class="domesticCalcResponse dataTabs tabPopup" v-if="domesticDataAvailable == true && withPopup == true && currentTab == 'domestic' && isTabbing == true">
+                        <div class="container">
+                            <a class="closeTabPopup" @click.prevent="removePopup"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                            <div class="tabWrap">
+                                <!-- Tab Buttons -->
+                                <ul>
+                                    <li v-for="(value, index) in domesticData">
+                                        <a @click.prevent="setActive(index)" :class="{ active: isActive(index) }" :href="index">{{index}}</a>
+                                    </li>
+                                </ul>
+
+                                <!-- Tab Content -->
+                                <div class="tabContent" id="myTabContent">
+                                    <div :class="{ 'active': isActive(index) }" id="index" v-for="(value, index) in domesticData" class="tab">
+
+                                        <div>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>Mode</th>
+                                                        <th>Freight Charges</th>
+                                                        <th v-if="paymentMode == '1'">COD Charges</th>
+                                                        <th>Total Charges</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-if="domesticWeight <= 25">
+                                                        <td>Express Mode</td>
+                                                        <td>{{ formatCurrency( value.air[activeZone].min ) }}</td>
+                                                        <td v-if="paymentMode == '1'">{{ formatCurrency( value.air.cod_charges.min ) }}</td>
+                                                        <td> {{ formatCurrency( totalCharge( value.air[activeZone].min, value.air.cod_charges.min ) ) }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Surface Mode</td>
+                                                        <td>{{ formatCurrency( value.surface[activeZone].min ) }}</td>
+                                                        <td v-if="paymentMode == '1'">{{ formatCurrency( value.surface.cod_charges.min ) }}</td>
+                                                        <td>{{ formatCurrency( totalCharge( value.surface[activeZone].min, value.surface.cod_charges.min ) ) }}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabs International Data -->
+                    <div class="intCalcResponse dataTabs tabPopup" v-if="intDataAvailable == true && withPopup == true && currentTab == 'internatinal' && isTabbing == true">
+                        <div class="container">
+                            <a class="closeTabPopup" @click.prevent="removePopup"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+
+                            <div class="tabWrap">
+                                <div class="airModeContainer">
+                                    <h4 v-if="isNotService === false"><strong>Air Mode</strong></h4>
+                                    <small v-if="isNotService === false" style="color:black;">Rates are inclusive of GST</small>
+                                    <p v-if="isNotService === false">*For COD shipments, fixed COD charge or COD % of the order value whichever is higher will be taken while calculating the COD fee.</p>
+                                    <h4 v-if="isNotService"><strong>{{notServiceMsg}}</strong></h4>
+                                    <table v-else>
+                                        <thead>
+                                            <tr>
+                                                <th style="text-align: center;">Courier Name</th>
+                                                <th style="text-align: center;">Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="data in intData">
+                                                <td>
+                                                    {{data.courier_name}}
+                                                </td>
+                                                <td>
+                                                    {{ formatCurrency( data.rate.rate ) }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <!-- Footer Container -->
+                                <div class="taxBottomBox" v-if="isNotService === false">
+                                    <p>For detailed pricing,</p>
+                                    <a href="https://app.shiprocket.in/register?source=SRX">Signup Now</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </script>
+
+            <script type="rocketlazyloadscript">
+                document.querySelectorAll('.toc li a').forEach(function(li) { li.innerHTML = li.innerHTML.split('&nbsp;').join(' ').replace(/\s+/g, ' '); }); jQuery('#srtocToggleLabel').click(function(e) { e.preventDefault(); jQuery('.srtoc ol.toc').slideToggle('fast',
+                function() { if (jQuery('#srtocToggleLabel').text() == 'show') { jQuery('#srtocToggleLabel').text('hide'); } else { jQuery('#srtocToggleLabel').text('show'); } }); });
+            </script>
+            <script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+                var timeoutSearchInput = null;
+
+                jQuery('input#searchInput').keyup(function(event) {
+                    // 				if (event.which <= 90 && event.which >= 48) {
+                    clearTimeout(timeoutSearchInput);
+
+                    jQuery('#searchResults').html('');
+
+                    if (this.value.length <= 2 || this.value == '') {
+                        jQuery('#searchResults').hide();
+                        jQuery('#searchLoader').hide();
+                        jQuery('#searchResults').html('');
+                    }
+
+                    if (this.value.length < 3) return;
+
+                    jQuery('#searchLoader').show();
+                    timeoutSearchInput = setTimeout(function() {
+                        jQuery.ajax({
+                            url: 'https://www.shiprocket.in/wp-admin/admin-ajax.php',
+                            type: 'post',
+                            data: {
+                                action: 'search_fetch',
+                                keyword: jQuery('input#searchInput').val(),
+                                postType: (typeof jQuery('input[name="post_type"]').val() !== "undefined") ? jQuery('input[name="post_type"]').val() : '',
+                            },
+                            success: function(data) {
+                                jQuery('#searchResults').show();
+                                jQuery('#searchResults').html(data);
+                                jQuery('#searchLoader').hide();
+                            }
+                        });
+                    }, 1000);
+                    // 				}
+                });
+            </script>
+
+            <script type="rocketlazyloadscript">
+                var ele = document.querySelectorAll('.wpcf7-tel')[0]; if (ele !== undefined) { ele.onkeypress = function(e) { if(isNaN(this.value+""+String.fromCharCode(e.charCode))) return false; } ele.onpaste = function(e){ e.preventDefault(); } }
+            </script>
+            <script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+                var disableSubmit = false;
+                jQuery('input.wpcf7-submit[type="submit"]').click(function() {
+                    jQuery(':input[type="submit"]').attr('value', "Sending...");
+                    if (disableSubmit == true) {
+                        return false;
+                    }
+                    disableSubmit = true;
+                    return true;
+                })
+
+                var wpcf7Elm = document.querySelector('.wpcf7');
+                wpcf7Elm.addEventListener('wpcf7mailsent', function(event) {
+                    jQuery(':input[type="submit"]').attr('value', "Sent");
+                    disableSubmit = false;
+                }, false);
+
+                wpcf7Elm.addEventListener('wpcf7invalid', function(event) {
+                    jQuery(':input[type="submit"]').attr('value', "Submit")
+                    disableSubmit = false;
+                }, false);
+
+                wpcf7Elm.addEventListener('wpcf7mailfailed', function(event) {
+                    jQuery(':input[type="submit"]').attr('value', "Submit")
+                    disableSubmit = false;
+                }, false);
+            </script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/comment-reply.min.js?ver=81582bdb254a94e4464424087c6479a8' id='comment-reply-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='mediaelement-core-js-before'>
+                var mejsL10n = {
+                    "language": "en",
+                    "strings": {
+                        "mejs.download-file": "Download File",
+                        "mejs.install-flash": "You are using a browser that does not have Flash player enabled or installed. Please turn on your Flash player plugin or download the latest version from https:\/\/get.adobe.com\/flashplayer\/",
+                        "mejs.fullscreen": "Fullscreen",
+                        "mejs.play": "Play",
+                        "mejs.pause": "Pause",
+                        "mejs.time-slider": "Time Slider",
+                        "mejs.time-help-text": "Use Left\/Right Arrow keys to advance one second, Up\/Down arrows to advance ten seconds.",
+                        "mejs.live-broadcast": "Live Broadcast",
+                        "mejs.volume-help-text": "Use Up\/Down Arrow keys to increase or decrease volume.",
+                        "mejs.unmute": "Unmute",
+                        "mejs.mute": "Mute",
+                        "mejs.volume-slider": "Volume Slider",
+                        "mejs.video-player": "Video Player",
+                        "mejs.audio-player": "Audio Player",
+                        "mejs.captions-subtitles": "Captions\/Subtitles",
+                        "mejs.captions-chapters": "Chapters",
+                        "mejs.none": "None",
+                        "mejs.afrikaans": "Afrikaans",
+                        "mejs.albanian": "Albanian",
+                        "mejs.arabic": "Arabic",
+                        "mejs.belarusian": "Belarusian",
+                        "mejs.bulgarian": "Bulgarian",
+                        "mejs.catalan": "Catalan",
+                        "mejs.chinese": "Chinese",
+                        "mejs.chinese-simplified": "Chinese (Simplified)",
+                        "mejs.chinese-traditional": "Chinese (Traditional)",
+                        "mejs.croatian": "Croatian",
+                        "mejs.czech": "Czech",
+                        "mejs.danish": "Danish",
+                        "mejs.dutch": "Dutch",
+                        "mejs.english": "English",
+                        "mejs.estonian": "Estonian",
+                        "mejs.filipino": "Filipino",
+                        "mejs.finnish": "Finnish",
+                        "mejs.french": "French",
+                        "mejs.galician": "Galician",
+                        "mejs.german": "German",
+                        "mejs.greek": "Greek",
+                        "mejs.haitian-creole": "Haitian Creole",
+                        "mejs.hebrew": "Hebrew",
+                        "mejs.hindi": "Hindi",
+                        "mejs.hungarian": "Hungarian",
+                        "mejs.icelandic": "Icelandic",
+                        "mejs.indonesian": "Indonesian",
+                        "mejs.irish": "Irish",
+                        "mejs.italian": "Italian",
+                        "mejs.japanese": "Japanese",
+                        "mejs.korean": "Korean",
+                        "mejs.latvian": "Latvian",
+                        "mejs.lithuanian": "Lithuanian",
+                        "mejs.macedonian": "Macedonian",
+                        "mejs.malay": "Malay",
+                        "mejs.maltese": "Maltese",
+                        "mejs.norwegian": "Norwegian",
+                        "mejs.persian": "Persian",
+                        "mejs.polish": "Polish",
+                        "mejs.portuguese": "Portuguese",
+                        "mejs.romanian": "Romanian",
+                        "mejs.russian": "Russian",
+                        "mejs.serbian": "Serbian",
+                        "mejs.slovak": "Slovak",
+                        "mejs.slovenian": "Slovenian",
+                        "mejs.spanish": "Spanish",
+                        "mejs.swahili": "Swahili",
+                        "mejs.swedish": "Swedish",
+                        "mejs.tagalog": "Tagalog",
+                        "mejs.thai": "Thai",
+                        "mejs.turkish": "Turkish",
+                        "mejs.ukrainian": "Ukrainian",
+                        "mejs.vietnamese": "Vietnamese",
+                        "mejs.welsh": "Welsh",
+                        "mejs.yiddish": "Yiddish"
+                    }
+                };
+            </script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/mediaelement/mediaelement-and-player.min.js?ver=4.2.17' id='mediaelement-core-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/mediaelement/mediaelement-migrate.min.js?ver=81582bdb254a94e4464424087c6479a8' id='mediaelement-migrate-js' defer></script>
+            <script type='text/javascript' id='mediaelement-js-extra'>
+                /* <![CDATA[ */
+                var _wpmejsSettings = {
+                    "pluginPath": "\/wp-includes\/js\/mediaelement\/",
+                    "classPrefix": "mejs-",
+                    "stretching": "responsive"
+                };
+                /* ]]> */
+            </script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/mediaelement/wp-mediaelement.min.js?ver=81582bdb254a94e4464424087c6479a8' id='wp-mediaelement-js' defer></script>
+
+
+
+            <script data-minify="1" type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/plugins/dnd-shortcodes/js/jquery.inview.js?ver=1673870515' id='inview-js' defer></script>
+
+            <script data-minify="1" type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/plugins/dnd-shortcodes/js/jquery.tipsy.js?ver=1673870515' id='tipsy-js' defer></script>
+
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2' id='jquery-ui-core-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/jquery/ui/accordion.min.js?ver=1.13.2' id='jquery-ui-accordion-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/jquery/ui/tabs.min.js?ver=1.13.2' id='jquery-ui-tabs-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/jquery/ui/effect.min.js?ver=1.13.2' id='jquery-effects-core-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/jquery/ui/effect-slide.min.js?ver=1.13.2' id='jquery-effects-slide-js' defer></script>
+            <script type='text/javascript' id='dnd-shortcodes-js-extra'>
+                /* <![CDATA[ */
+                var dnd_options = {
+                    "dnd_tipsy_opacity": "0.8",
+                    "dnd_custom_map_style": ""
+                };
+                /* ]]> */
+            </script>
+            <script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/plugins/dnd-shortcodes/js/init.js?ver=1673870515' id='dnd-shortcodes-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-browser-checker-js-after'>
+                "use strict";
+                var _createClass = function() {
+                    function defineProperties(target, props) {
+                        for (var i = 0; i < props.length; i++) {
+                            var descriptor = props[i];
+                            descriptor.enumerable = descriptor.enumerable || !1, descriptor.configurable = !0, "value" in descriptor && (descriptor.writable = !0), Object.defineProperty(target, descriptor.key, descriptor)
+                        }
+                    }
+                    return function(Constructor, protoProps, staticProps) {
+                        return protoProps && defineProperties(Constructor.prototype, protoProps), staticProps && defineProperties(Constructor, staticProps), Constructor
+                    }
+                }();
+
+                function _classCallCheck(instance, Constructor) {
+                    if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function")
+                }
+                var RocketBrowserCompatibilityChecker = function() {
+                    function RocketBrowserCompatibilityChecker(options) {
+                        _classCallCheck(this, RocketBrowserCompatibilityChecker), this.passiveSupported = !1, this._checkPassiveOption(this), this.options = !!this.passiveSupported && options
+                    }
+                    return _createClass(RocketBrowserCompatibilityChecker, [{
+                        key: "_checkPassiveOption",
+                        value: function(self) {
+                            try {
+                                var options = {
+                                    get passive() {
+                                        return !(self.passiveSupported = !0)
+                                    }
+                                };
+                                window.addEventListener("test", null, options), window.removeEventListener("test", null, options)
+                            } catch (err) {
+                                self.passiveSupported = !1
+                            }
+                        }
+                    }, {
+                        key: "initRequestIdleCallback",
+                        value: function() {
+                            !1 in window && (window.requestIdleCallback = function(cb) {
+                                var start = Date.now();
+                                return setTimeout(function() {
+                                    cb({
+                                        didTimeout: !1,
+                                        timeRemaining: function() {
+                                            return Math.max(0, 50 - (Date.now() - start))
+                                        }
+                                    })
+                                }, 1)
+                            }), !1 in window && (window.cancelIdleCallback = function(id) {
+                                return clearTimeout(id)
+                            })
+                        }
+                    }, {
+                        key: "isDataSaverModeOn",
+                        value: function() {
+                            return "connection" in navigator && !0 === navigator.connection.saveData
+                        }
+                    }, {
+                        key: "supportsLinkPrefetch",
+                        value: function() {
+                            var elem = document.createElement("link");
+                            return elem.relList && elem.relList.supports && elem.relList.supports("prefetch") && window.IntersectionObserver && "isIntersecting" in IntersectionObserverEntry.prototype
+                        }
+                    }, {
+                        key: "isSlowConnection",
+                        value: function() {
+                            return "connection" in navigator && "effectiveType" in navigator.connection && ("2g" === navigator.connection.effectiveType || "slow-2g" === navigator.connection.effectiveType)
+                        }
+                    }]), RocketBrowserCompatibilityChecker
+                }();
+            </script>
+            <script type='text/javascript' id='rocket-preload-links-js-extra'>
+                /* <![CDATA[ */
+                var RocketPreloadLinksConfig = {
+                    "excludeUris": "\/web-stories\/|\/wp-cron.php|\/(?:.+\/)?feed(?:\/(?:.+\/?)?)?$|\/(?:.+\/)?embed\/|\/(index\\.php\/)?wp\\-json(\/.*|$)|\/refer\/|\/go\/|\/recommend\/|\/recommends\/",
+                    "usesTrailingSlash": "1",
+                    "imageExt": "jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php",
+                    "fileExt": "jpg|jpeg|gif|png|tiff|bmp|webp|avif|pdf|doc|docx|xls|xlsx|php|html|htm",
+                    "siteUrl": "https:\/\/www.shiprocket.in",
+                    "onHoverDelay": "100",
+                    "rateThrottle": "3"
+                };
+                /* ]]> */
+            </script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' id='rocket-preload-links-js-after'>
+                (function() {
+                    "use strict";
+                    var r = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function(e) {
+                            return typeof e
+                        } : function(e) {
+                            return e && "function" == typeof Symbol && e.constructor === Symbol && e !== Symbol.prototype ? "symbol" : typeof e
+                        },
+                        e = function() {
+                            function i(e, t) {
+                                for (var n = 0; n < t.length; n++) {
+                                    var i = t[n];
+                                    i.enumerable = i.enumerable || !1, i.configurable = !0, "value" in i && (i.writable = !0), Object.defineProperty(e, i.key, i)
+                                }
+                            }
+                            return function(e, t, n) {
+                                return t && i(e.prototype, t), n && i(e, n), e
+                            }
+                        }();
+
+                    function i(e, t) {
+                        if (!(e instanceof t)) throw new TypeError("Cannot call a class as a function")
+                    }
+                    var t = function() {
+                        function n(e, t) {
+                            i(this, n), this.browser = e, this.config = t, this.options = this.browser.options, this.prefetched = new Set, this.eventTime = null, this.threshold = 1111, this.numOnHover = 0
+                        }
+                        return e(n, [{
+                            key: "init",
+                            value: function() {
+                                !this.browser.supportsLinkPrefetch() || this.browser.isDataSaverModeOn() || this.browser.isSlowConnection() || (this.regex = {
+                                    excludeUris: RegExp(this.config.excludeUris, "i"),
+                                    images: RegExp(".(" + this.config.imageExt + ")$", "i"),
+                                    fileExt: RegExp(".(" + this.config.fileExt + ")$", "i")
+                                }, this._initListeners(this))
+                            }
+                        }, {
+                            key: "_initListeners",
+                            value: function(e) {
+                                -1 < this.config.onHoverDelay && document.addEventListener("mouseover", e.listener.bind(e), e.listenerOptions), document.addEventListener("mousedown", e.listener.bind(e), e.listenerOptions), document.addEventListener("touchstart", e.listener.bind(e), e.listenerOptions)
+                            }
+                        }, {
+                            key: "listener",
+                            value: function(e) {
+                                var t = e.target.closest("a"),
+                                    n = this._prepareUrl(t);
+                                if (null !== n) switch (e.type) {
+                                    case "mousedown":
+                                    case "touchstart":
+                                        this._addPrefetchLink(n);
+                                        break;
+                                    case "mouseover":
+                                        this._earlyPrefetch(t, n, "mouseout")
+                                }
+                            }
+                        }, {
+                            key: "_earlyPrefetch",
+                            value: function(t, e, n) {
+                                var i = this,
+                                    r = setTimeout(function() {
+                                        if (r = null, 0 === i.numOnHover) setTimeout(function() {
+                                            return i.numOnHover = 0
+                                        }, 1e3);
+                                        else if (i.numOnHover > i.config.rateThrottle) return;
+                                        i.numOnHover++, i._addPrefetchLink(e)
+                                    }, this.config.onHoverDelay);
+                                t.addEventListener(n, function e() {
+                                    t.removeEventListener(n, e, {
+                                        passive: !0
+                                    }), null !== r && (clearTimeout(r), r = null)
+                                }, {
+                                    passive: !0
+                                })
+                            }
+                        }, {
+                            key: "_addPrefetchLink",
+                            value: function(i) {
+                                return this.prefetched.add(i.href), new Promise(function(e, t) {
+                                    var n = document.createElement("link");
+                                    n.rel = "prefetch", n.href = i.href, n.onload = e, n.onerror = t, document.head.appendChild(n)
+                                }).catch(function() {})
+                            }
+                        }, {
+                            key: "_prepareUrl",
+                            value: function(e) {
+                                if (null === e || "object" !== (void 0 === e ? "undefined" : r(e)) || !1 in e || -1 === ["http:", "https:"].indexOf(e.protocol)) return null;
+                                var t = e.href.substring(0, this.config.siteUrl.length),
+                                    n = this._getPathname(e.href, t),
+                                    i = {
+                                        original: e.href,
+                                        protocol: e.protocol,
+                                        origin: t,
+                                        pathname: n,
+                                        href: t + n
+                                    };
+                                return this._isLinkOk(i) ? i : null
+                            }
+                        }, {
+                            key: "_getPathname",
+                            value: function(e, t) {
+                                var n = t ? e.substring(this.config.siteUrl.length) : e;
+                                return n.startsWith("/") || (n = "/" + n), this._shouldAddTrailingSlash(n) ? n + "/" : n
+                            }
+                        }, {
+                            key: "_shouldAddTrailingSlash",
+                            value: function(e) {
+                                return this.config.usesTrailingSlash && !e.endsWith("/") && !this.regex.fileExt.test(e)
+                            }
+                        }, {
+                            key: "_isLinkOk",
+                            value: function(e) {
+                                return null !== e && "object" === (void 0 === e ? "undefined" : r(e)) && (!this.prefetched.has(e.href) && e.origin === this.config.siteUrl && -1 === e.href.indexOf("?") && -1 === e.href.indexOf("#") && !this.regex.excludeUris.test(e.href) && !this.regex.images.test(e.href))
+                            }
+                        }], [{
+                            key: "run",
+                            value: function() {
+                                "undefined" != typeof RocketPreloadLinksConfig && new n(new RocketBrowserCompatibilityChecker({
+                                    capture: !0,
+                                    passive: !0
+                                }), RocketPreloadLinksConfig).init()
+                            }
+                        }]), n
+                    }();
+                    t.run();
+                }());
+            </script>
+            <script data-minify="1" type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/themes/salamat/js/jquery.fancybox-1.3.4.js?ver=1673870515' id='fancybox-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/imagesloaded.min.js?ver=4.1.4' id='imagesloaded-js' defer></script>
+            <script type="rocketlazyloadscript" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-includes/js/masonry.min.js?ver=4.2.2' id='masonry-js' defer></script>
+            <script type="rocketlazyloadscript" data-minify="1" data-rocket-type='text/javascript' src='https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/wp-content/themes/salamat/js/cookies.js?ver=1673870515' id='cookies-js' defer></script>
+            <script>
+                window.lazyLoadOptions = [{
+                    elements_selector: "img[data-lazy-src],.rocket-lazyload,iframe[data-lazy-src]",
+                    data_src: "lazy-src",
+                    data_srcset: "lazy-srcset",
+                    data_sizes: "lazy-sizes",
+                    class_loading: "lazyloading",
+                    class_loaded: "lazyloaded",
+                    threshold: 300,
+                    callback_loaded: function(element) {
+                        if (element.tagName === "IFRAME" && element.dataset.rocketLazyload == "fitvidscompatible") {
+                            if (element.classList.contains("lazyloaded")) {
+                                if (typeof window.jQuery != "undefined") {
+                                    if (jQuery.fn.fitVids) {
+                                        jQuery(element).parent().fitVids()
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, {
+                    elements_selector: ".rocket-lazyload",
+                    data_src: "lazy-src",
+                    data_srcset: "lazy-srcset",
+                    data_sizes: "lazy-sizes",
+                    class_loading: "lazyloading",
+                    class_loaded: "lazyloaded",
+                    threshold: 300,
+                }];
+                window.addEventListener('LazyLoad::Initialized', function(e) {
+                    var lazyLoadInstance = e.detail.instance;
+                    if (window.MutationObserver) {
+                        var observer = new MutationObserver(function(mutations) {
+                            var image_count = 0;
+                            var iframe_count = 0;
+                            var rocketlazy_count = 0;
+                            mutations.forEach(function(mutation) {
+                                for (var i = 0; i < mutation.addedNodes.length; i++) {
+                                    if (typeof mutation.addedNodes[i].getElementsByTagName !== 'function') {
+                                        continue
+                                    }
+                                    if (typeof mutation.addedNodes[i].getElementsByClassName !== 'function') {
+                                        continue
+                                    }
+                                    images = mutation.addedNodes[i].getElementsByTagName('img');
+                                    is_image = mutation.addedNodes[i].tagName == "IMG";
+                                    iframes = mutation.addedNodes[i].getElementsByTagName('iframe');
+                                    is_iframe = mutation.addedNodes[i].tagName == "IFRAME";
+                                    rocket_lazy = mutation.addedNodes[i].getElementsByClassName('rocket-lazyload');
+                                    image_count += images.length;
+                                    iframe_count += iframes.length;
+                                    rocketlazy_count += rocket_lazy.length;
+                                    if (is_image) {
+                                        image_count += 1
+                                    }
+                                    if (is_iframe) {
+                                        iframe_count += 1
+                                    }
+                                }
+                            });
+                            if (image_count > 0 || iframe_count > 0 || rocketlazy_count > 0) {
+                                lazyLoadInstance.update()
+                            }
+                        });
+                        var b = document.getElementsByTagName("body")[0];
+                        var config = {
+                            childList: !0,
+                            subtree: !0
+                        };
+                        observer.observe(b, config)
+                    }
+                }, !1)
+            </script>
+            <script data-no-minify="1" async src="https://d2kh7o38xye1vj.cloudfront.net/wp-content/plugins/wp-rocket/assets/js/lazyload/17.5/lazyload.min.js"></script>
+            <!-- Google Tag Manager -->
+            <script type="rocketlazyloadscript">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','GTM-P7FQTZ6');
+            </script>
+            <!-- End Google Tag Managerss -->
+            <script type="rocketlazyloadscript">
+                jQuery(document).ready(function(){ jQuery("a.menu-link").addClass("link-click"); jQuery(".menu-item a").addClass("link-click"); jQuery("section.blog h2 a").addClass("link-click"); jQuery("section h5 a").addClass("link-click"); jQuery(".inner-details a").addClass("link-click");
+                jQuery(".story-cards a").addClass("link-click"); var referrer = document.referrer; var pathname = document.location.pathname; let searchParams = new URLSearchParams(document.location.search); let UTM = {}; function setCookie(cname, cvalue,
+                exdays) { var d = new Date(); d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000)); var expires = "expires="+d.toUTCString(); cvalue = cvalue == 'null' ? '' : cvalue; document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/"+";domain=.shiprocket.in";
+                //console.log('Setcookie'+cname+cvalue); } function getParsedCookie(val){ //console.log('inside parsed cookie',val); return val ? JSON.parse(decodeURIComponent(val)) : {}; } function getCookie(cname) { var name = cname + "="; var ca =
+                document.cookie.split(';'); for(var i = 0; i
+                < ca.length; i++) { var c=c a[i]; while (c.charAt(0)==' ' ) { c=c .substring(1); } if (c.indexOf(name)==0 ) { return c.substring(name.length, c.length); } } return ""; } function
+                    setFirstUTM(){ setCookie( "first_utm",JSON.stringify(getParsedCookie(getCookie( "UTM"))),30); //console.log( 'first_',getCookie( "UTM")); } if(!getCookie( "first_utm") && getCookie( "UTM")){ setFirstUTM(); } let parsedUtm=g etParsedCookie(getCookie(
+                    "UTM")); if(!getCookie( "UTM")){ UTM[ "pathname"]=p athname; UTM[ "referrer"]=r eferrer; console.log(referrer); } else{ UTM[ "pathname"]=p arsedUtm[ "pathname"]; UTM[ "referrer"]=p arsedUtm[ "referrer"]; } let paramsKeys=[ 'utm_source',
+                    'utm_campaign', 'utm_content', 'utm_medium', 'utm_term']; for(key of paramsKeys){ if(searchParams.get(key)){ UTM[key]=s earchParams.get(key); } else if(getCookie( "UTM")){ let parsedUTMData=p arsedUtm; if(parsedUTMData[key]){ UTM[key]=p arsedUtm[key];
+                    } } } setCookie( "UTM",JSON.stringify(UTM),30); if(!getCookie( "first_utm") && getCookie( "UTM")){ setFirstUTM(); } function getParams(){ console.log( 'inside get params'); let params="" ; if( 'utm_source' in window.location.search){ params=w
+                    indow.location.search+ '&pathname='+getCookie( 'pathname')+ '&referrer='+getCookie( 'referrer'); } else{ params=` ? pathname=`+getCookie( 'pathname')+ '&referrer='+getCookie( 'referrer')+ '&utm_source='+getCookie( 'utm_source')+
+                    '&utm_campaign='+getCookie( 'utm_campaign')+ '&utm_content='+getCookie( 'utm_content')+ '&utm_term='+getCookie( 'utm_term'); } return params; } function checkCookie() { var med=g etCookie( "utm_medium"); var comp=g etCookie( "utm_campaign"); var source=g
+                    etCookie( "utm_source"); jQuery( '.signup-home').click(function(){ var href=j Query(this).attr( 'href'); var button_text=j Query(this).text(); webengage.track( "Clicked on CTA", { referrer : referrer, "utm_source" : source,
+                    "utm_medium" : med, "utm_campaign" : comp, cta_text : button_text, destination_url : href }); }); } window.onload=c heckCookie; jQuery( '.link-click').click(function(){ var href=j Query(this).attr( 'href'); var button_text=j Query(this).text(); webengage.track(
+                    "Clicked on Link", { cta_text : button_text, destination_url : href }); }); }); </script>
+                    <script type="rocketlazyloadscript">
+                        jQuery(document).ready(function(){ jQuery('.commin-part.owl-carousel').owlCarousel({ loop:true, margin:10, autoplay:true, autoplayTimeout:4000, autoplayHoverPause:true, nav:true, responsive:{ 0:{ items:2 }, 600:{ items:3 }, 1000:{ items:3 } } }); jQuery('.logo-carousel').owlCarousel({
+                        loop:false, margin:10, nav:true, autoplay:true, autoplayTimeout:2000, autoplayHoverPause:true, responsive:{ 0:{ items:3 }, 600:{ items:5 }, 1000:{ items:9 } } }); jQuery('.logo-carousel2').owlCarousel({ loop:false, margin:10, nav:true,
+                        autoplay:true, autoplayTimeout:2000, autoplayHoverPause:true, responsive:{ 0:{ items:3 }, 600:{ items:5 }, 1000:{ items:6 } } }); jQuery('.owl-carousel3').owlCarousel({ loop:true, margin:10, mouseDrag:false, nav:true, responsive:{
+                        0:{ items:1 }, 600:{ items:1 }, 1000:{ items:2 } } }); jQuery('.carrier-int-carousel').owlCarousel({ loop:true, margin:10, nav:false, autoplay:true, autoplayTimeout:2000, autoplayHoverPause:true, responsive:{ 0:{ items:3 }, 600:{
+                        items:5 }, 1000:{ items:6 } } }); jQuery('.channel-int-carousel').owlCarousel({ loop:true, margin:10, nav:true, responsive:{ 0:{ items:3 }, 600:{ items:5 }, 1000:{ items:6 } } }); jQuery('.owl-carousel2').owlCarousel({ loop:true,
+                        margin:10, mouseDrag:false, nav:true, responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:3 } } }); jQuery('.owl-carouselleader').owlCarousel({ loop:true, margin:10, nav:true, responsive:{ 0:{ items:1 }, 600:{ items:2 },
+                        1000:{ items:3 } } }); jQuery('.owl-carousel-press').owlCarousel({ loop:true, nav:true, margin:10, autoplay:true, autoplayTimeout:5000, autoplayHoverPause:true, responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:3 } } });
+                        jQuery('.owl-carousel-aarambh').owlCarousel({ loop:true, nav:true, margin:10, mouseDrag:true, autoplay:true, /*autoplayTimeout:5000, autoplayHoverPause:true,*/ responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:4 } } });
+                        jQuery('.owl-carousel-price').owlCarousel({ loop:true, nav:true, margin:10, mouseDrag:false, autoplay:false, /*autoplayTimeout:5000, autoplayHoverPause:true,*/ responsive:{ 0:{ items:1 }, 600:{ items:2 }, 1000:{ items:4 } } });
+                        jQuery('.owl-carousel-jury').owlCarousel({ loop:true, nav:true, mouseDrag:true, margin:10, autoplay:true, autoplayTimeout:4000, autoplayHoverPause:true, responsive:{ 0:{ items:1 }, 500:{ items:2 }, 768:{ items:3 }, 1000:{ items:3
+                        } } }); jQuery('.slider_owl').owlCarousel({ items:1, // if you want a slider, not a carousel, specify "1" here loop:true, autoPlay:true, autoplayHoverPause:true, // if slider is autoplaying, pause on mouse hover autoplayTimeout:380,
+                        autoplaySpeed:800, navSpeed:500, dots:true, // dots navigation below the slider nav:true, // left and right navigation }); jQuery('.owl-carousel-reduce').owlCarousel({ loop:true, margin:10, nav:true, autoplay:true, autoplayTimeout:5000,
+                        autoplayHoverPause:true, responsive:{ 0:{ items:1 }, 600:{ items:1 }, 1000:{ items:1 } } }); jQuery('.owl-carousel-testi').owlCarousel({ loop:true, margin:10, center:true, nav:true, autoplay:true, autoplayTimeout:5000, autoplayHoverPause:true,
+                        responsive:{ 0:{ items:1 }, 600:{ items:1 }, 1000:{ items:1 } } }); jQuery('.owl-carousel').owlCarousel({ loop:true, margin:10, nav:true, autoplay:true, autoplayTimeout:2000, autoplayHoverPause:true, responsive:{ 0:{ items:2 },
+                        600:{ items:3 }, 1000:{ items:5 } } }); jQuery('.product-slider').owlCarousel({ nav: false, dots: false, items: 6, mergeFit: true, responsive: { 0: { items: 2, dots: true, autoplay: true, autoplayTimeout: 5000, loop: true, slideBy:
+                        2 }, 768: { items: 3, dots: true, autoplay: true, autoplayTimeout: 5000, loop: true, slideBy: 3 }, 1024: { items: 4, dots: true, autoplay: true, autoplayTimeout: 5000, loop: true, slideBy: 4 }, 1200: { items: 6 } } }); jQuery('.insurance-slider').owlCarousel({
+                        items: 2, margin: 40, nav: false, dots: false, mergeFit:true, responsive:{ 0:{ items:1, dots: true, autoplay: true, autoplayTimeout: 8000, loop: true }, 768:{ items:1, dots: true, autoplay: true, autoplayTimeout: 8000, loop: true
+                        }, 1024:{ items:2 } } }); jQuery('.bundleTestimonailSlider').owlCarousel({ items: 2, margin: 40, nav: false, dots: true, autoplay: true, autoplayTimeout: 8000, responsive:{ 0:{ items:1, }, 1024: { items: 2, } } }); jQuery('.teamMembers').owlCarousel({
+                        nav: false, dots: true, margin: 50, slideBy: 2, // loop: true, // autoplay: true, // autoplayTimeout: 8000, responsive:{ 0: { items:1, slideBy: 1 }, 600: { items:2, slideBy: 2 }, 1000: { items:3, slideBy: 3 }, 1200: { items:4,
+                        slideBy: 4 } } }); jQuery('.rfBlogs').owlCarousel({ nav: false, dots: true, margin: 50, responsive:{ 0: { items:1 }, 600: { items:2 }, 1000: { items:3 } } }); jQuery('.cstm-rf-personSlider .persons').owlCarousel({ nav: true, navText:
+                        ["<img src='https://www.shiprocket.in/wp-content/uploads/2022/07/arrow-circle-left.png'>","<img src='https://www.shiprocket.in/wp-content/uploads/2022/07/arrow-circle-right.png'>"], dots: false, margin:
+                        50, slideBy: 1, responsive:{ 0: { items:1 }, 600: { items:2 }, 1000: { items:3 }, 1200: { items:3 } } }); jQuery('.testimonials .testimonialWrapper').owlCarousel({ nav: false, dots: true, margin: 40, items: 2, responsive:{ 0: {
+                        items:1 }, 767: { items:1, autoplay: true, autoplayTimeout: 4000, loop: true, }, 768: { items: 2 } } }); var navbar = document.getElementById("ABdev_main_header"); var sticky = navbar.offsetTop; function myFunction() { if (window.pageYOffset
+                        >= 35) { navbar.classList.remove("home-header"); } else { navbar.classList.add("home-header"); } } jQuery(window).scroll(function(){ myFunction(); }); var scroll = 260; //window.innerWidth-45; jQuery('.four_box').find('.dnd_section_content').attr('id',
+                        'scrollContainerFBox'); jQuery('.how-works').find('.dnd_section_content').attr('id', 'scrollContainerHow'); jQuery('.features').find('.dnd_section_content').attr('id', 'scrollContainerHow'); jQuery('.arrow-icon a.left').on('click',
+                        function(){ let a = $(this).parents('.arrow-icon').next('.features').find('.dnd_section_content').attr('id'); if(a == 'scrollContainerFBox') { document.getElementById('scrollContainerFBox').scrollLeft -= scroll; } if(a == 'scrollContainerHow')
+                        { document.getElementById('scrollContainerHow').scrollLeft -= scroll; } }); jQuery('.arrow-icon a.right').on('click', function(){ let b = $(this).parents('.arrow-icon').next('.features').find('.dnd_section_content').attr('id');
+                        if(b == 'scrollContainerFBox') { document.getElementById('scrollContainerFBox').scrollLeft += scroll; } if(b == 'scrollContainerHow') { document.getElementById('scrollContainerHow').scrollLeft += scroll; } }); jQuery("#main_menu
+                        .menu-item-has-children").click(function(){ jQuery(this).toggleClass("open"); jQuery(this).siblings().removeClass('open'); // auto collapse sub menu item }); jQuery("#ABdev_menu_toggle").click(function(){ jQuery("header#ABdev_main_header").toggleClass("active-nav");
+                        }); jQuery('#ABdev_menu_toggle').click(function(){ jQuery(this).toggleClass('open-d'); jQuery("#main_menu .menu-item-has-children").removeClass("open"); // to remove open sub item on clode }); /*jQuery('section').click(function
+                        () { jQuery('div#logo_menu_bar nav').css('display', 'none'); }); */ jQuery(".check-additional-show").click(function(){ jQuery(".check-additional").toggleClass("hide"); }); jQuery('.diwali-cta').click(function(){ jQuery('html,body').animate({
+                        scrollTop : 4600 // Scroll 500px from top of body }, 100); }); });
+                    </script>
+                    <script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+                        _linkedin_data_partner_id = "228347";
+                        (function() {
+                            var s = document.getElementsByTagName("script")[0];
+                            var b = document.createElement("script");
+                            b.type = "text/javascript";
+                            b.async = true;
+                            b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+                            s.parentNode.insertBefore(b, s);
+                        })();
+                    </script>
+                    <noscript>
+   <img height="1" width="1" style="display:none;" alt="" src="https://dc.ads.linkedin.com/collect/?pid=228347&fmt=gif" />
+</noscript>
+
+                    <script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+                        _linkedin_partner_id = "4903777";
+                        window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
+                        window._linkedin_data_partner_ids.push(_linkedin_partner_id);
+                    </script>
+                    <script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+                        (function(l) {
+                            if (!l) {
+                                window.lintrk = function(a, b) {
+                                    window.lintrk.q.push([a, b])
+                                };
+                                window.lintrk.q = []
+                            }
+                            var s = document.getElementsByTagName("script")[0];
+                            var b = document.createElement("script");
+                            b.type = "text/javascript";
+                            b.async = true;
+                            b.src = "https://snap.licdn.com/li.lms-analytics/insight.min.js";
+                            s.parentNode.insertBefore(b, s);
+                        })(window.lintrk);
+                    </script>
+                    <noscript>
+<img height="1" width="1" style="display:none;" alt="" src="https://px.ads.linkedin.com/collect/?pid=4903777&fmt=gif" />
+</noscript>
+
+                    <script data-minify="1" src="https://d2kh7o38xye1vj.cloudfront.net/wp-content/cache/min/1/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js?ver=1673870515" defer="defer"></script>
+
+                    <script type="rocketlazyloadscript" data-rocket-type="text/javascript" src="https://www.googleadservices.com/pagead/conversion.js" defer="defer"></script>
+                    <script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+                        /* <![CDATA[ */
+                        var google_conversion_id = 964219477;
+                        var google_custom_params = window.google_tag_params;
+                        var google_remarketing_only = true;
+                        /* ]]> */
+                    </script>
+                    <noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/964219477/?guid=ON&amp;script=0"/>
+</div>
+</noscript>
+                    <script type="rocketlazyloadscript">
+                        function openCity(evt, cityName) { var i, tabcontent, tablinks; tabcontent = document.getElementsByClassName("tabcontent-cstm"); for (i = 0; i
+                        < tabcontent.length; i++) { tabcontent[i].style.display="none" ; } tablinks=d ocument.getElementsByClassName(
+                            "tablinks"); for (i=0 ; i < tablinks.length; i++) { tablinks[i].className=t ablinks[i].className.replace( " active", ""); } document.getElementById(cityName).style.display="block" ; evt.currentTarget.className +=" active" ; } </script>
+
+                            <script type="rocketlazyloadscript" data-rocket-type="text/javascript">
+                                function doGTranslate(lang_pair) {
+                                    if (lang_pair.value) lang_pair = lang_pair.value;
+                                    if (lang_pair == '') return;
+                                    var lang = lang_pair.split('|')[1];
+                                    if (typeof _gaq != 'undefined') {
+                                        _gaq.push(['_trackEvent', 'GTranslate', lang, location.pathname + location.search]);
+                                    } else {
+                                        if (typeof ga != 'undefined') ga('send', 'event', 'GTranslate', lang, location.pathname + location.search);
+                                    }
+                                    var plang = location.pathname.split('/')[1];
+                                    if (plang.length != 2 && plang != 'zh-CN' && plang != 'zh-TW' && plang != 'hmn' && plang != 'haw' && plang != 'ceb') plang = 'en';
+                                    if (lang == 'en') location.href = location.protocol + '//' + location.host + gt_request_uri;
+                                    else location.href = location.protocol + '//' + location.host + '/' + lang + gt_request_uri;
+                                }
+                            </script>
+
+                            <script type="rocketlazyloadscript" id='_webengage_script_tag' data-rocket-type='text/javascript'>
+                                var webengage;
+                                ! function(w, e, b, n, g) {
+                                    function o(e, t) {
+                                        e[t[t.length - 1]] = function() {
+                                            r.__queue.push([t.join("."),
+                                                arguments
+                                            ])
+                                        }
+                                    }
+                                    var i, s, r = w[b],
+                                        z = " ",
+                                        l = "init options track screen onReady".split(z),
+                                        a = "feedback survey notification".split(z),
+                                        c = "options render clear abort".split(z),
+                                        p = "Open Close Submit Complete View Click".split(z),
+                                        u = "identify login logout setAttribute".split(z);
+                                    if (!r || !r.__v) {
+                                        for (w[b] = r = {
+                                                __queue: [],
+                                                __v: "6.0",
+                                                user: {}
+                                            }, i = 0; i < l.length; i++) o(r, [l[i]]);
+                                        for (i = 0; i < a.length; i++) {
+                                            for (r[a[i]] = {}, s = 0; s < c.length; s++) o(r[a[i]], [a[i], c[s]]);
+                                            for (s = 0; s < p.length; s++) o(r[a[i]], [a[i], "on" + p[s]])
+                                        }
+                                        for (i = 0; i < u.length; i++) o(r.user, ["user", u[i]]);
+                                        setTimeout(function() {
+                                            var f = e.createElement("script"),
+                                                d = e.getElementById("_webengage_script_tag");
+                                            f.type = "text/javascript", f.async = !0, f.src = ("https:" == e.location.protocol ? "https://ssl.widgets.webengage.com" : "http://cdn.widgets.webengage.com") + "/js/webengage-min-v-6.0.js", d.parentNode.insertBefore(f, d)
+                                        })
+                                    }
+                                }(window, document, "webengage");
+                                webengage.init("aa131c7a");
+                            </script>
+                            <script type="rocketlazyloadscript">
+                                jQuery(document).ready(function ($) { function readCookieInForm(name) { var nameEQ = name + "="; var ca = document.cookie.split(';'); for(var i=0;i
+                                < ca.length;i++) { var c=c a[i]; while (c.charAt(0)==' ' ) c=c .substring(1,c.length);
+                                    if (c.indexOf(nameEQ)==0 ) return c.substring(nameEQ.length,c.length); } return null; } var getUTMs=J SON.parse(readCookieInForm( 'UTM')); $( 'input[name=utm_source]').val(getUTMs.utm_source); $(
+                                    'input[name=utm_medium]').val(getUTMs.utm_medium); $( 'input[name=utm_campaign]').val(getUTMs.utm_campaign); $( 'input[name=utm_term]').val(getUTMs.utm_term); $( 'input[name=utm_content]').val(getUTMs.utm_content); $( 'input[name=utm_link]').val(location.href);
+                                    }); </script>
+                                    <script type="rocketlazyloadscript">
+                                        jQuery( document ).ready( function($) { jQuery( '.wp-block-yoast-faq-block' ).addClass( 'fcp-faq' ); jQuery( '.wp-block-yoast-faq-block div.schema-faq-section' ).addClass( 'fcp-opened' ); $( '.wp-block-yoast-faq-block .schema-faq-question' ).click( function()
+                                        { $( this ).parent().toggleClass( 'fcp-opened' ); }); });
+                                    </script>
+</body>
+
+</html>
+<!-- This website is like a Rocket, isn't it? Performance optimized by WP Rocket. Learn more: https://wp-rocket.me -->
