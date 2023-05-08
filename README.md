@@ -1,6 +1,6 @@
 # ShipEZ
 
-One stop solution for Mangining and Shipping products.
+One stop solution for Managing Warehouses and Shipping products.
 
 ## Installation
 
